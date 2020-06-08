@@ -4,7 +4,7 @@ TCEP is a research project that provides a programming model for development of 
  
 TCEP contributes the following:
 
-+ **Interface** to implement _operator placement_ algorithms
++ **Programming model** to implement _operator placement_ algorithms
 + **Transition execution strategies** for a _cost-efficient_ and _seamless_ operator placement transition
 + **Lightweight learning strategy** for selection of operator placement for the given QoS demands
 + **Heterogeneous infrastructure support** for execution of operator graphs
