@@ -1,7 +1,0 @@
-const SERVER = "10.2.1.40"
-const TCEP_PORT = "25001"
-
-module.exports = {
-    SERVER,
-    TCEP_PORT
-}
