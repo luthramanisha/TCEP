@@ -48,7 +48,7 @@ A full list of simulations can be found below:
 | 9 | Test Producer Consumer |
 | 10 | Test Optimal |
 | 11 | Test Random |
-| 11 | Test Lightweight |
+| 12 | Test Lightweight |
 
 `./scripts/publish-tcep.sh all $user@$IP`
 
