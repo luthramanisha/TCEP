@@ -1,4 +1,4 @@
-# TCEP: Transitions in Operator Placement to Adapt to Dynamic Network Environments
+# TCEP
 
 TCEP is a research project that provides a programming model for development of operator placement algorithms for streaming applications and a means to adapt operator placement by supporting transitions. 
  
