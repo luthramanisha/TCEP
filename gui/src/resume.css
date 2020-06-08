@@ -1,0 +1,719 @@
+/*!
+ * Start Bootstrap - Resume v5.0.7 (https://startbootstrap.com/template-overviews/resume)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-resume/blob/master/LICENSE)
+ */
+
+body {
+  font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  padding-top: 54px;
+  color: #868e96;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 0;
+    padding-left: 17rem;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #343a40;
+}
+
+h1 {
+  font-size: 6rem;
+  line-height: 5.5rem;
+}
+
+h2 {
+  font-size: 3.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+p.lead {
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+
+.subheading {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 1.5rem;
+}
+
+.social-icons a {
+  display: inline-block;
+  height: 3.5rem;
+  width: 3.5rem;
+  background-color: #495057;
+  color: #fff !important;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 3.5rem;
+  margin-right: 1rem;
+}
+
+.social-icons a:last-child {
+  margin-right: 0;
+}
+
+.social-icons a:hover {
+  background-color: #BD5D38;
+}
+
+.dev-icons {
+  font-size: 3rem;
+}
+
+.dev-icons .list-inline-item i:hover {
+  color: #BD5D38;
+}
+
+#sideNav .navbar-nav .nav-item .nav-link {
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
+#sideNav .navbar-toggler:focus {
+  outline-color: #d48a6e;
+}
+
+@media (min-width: 992px) {
+  #sideNav {
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 17rem;
+    height: 100vh;
+  }
+  #sideNav .navbar-brand {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: auto auto 0;
+    padding: 0.5rem;
+  }
+  #sideNav .navbar-brand .img-profile {
+    max-width: 10rem;
+    max-height: 10rem;
+    border: 0.5rem solid rgba(255, 255, 255, 0.2);
+  }
+  #sideNav .navbar-collapse {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-flex: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    width: 100%;
+    margin-bottom: auto;
+  }
+  #sideNav .navbar-collapse .navbar-nav {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+  }
+  #sideNav .navbar-collapse .navbar-nav .nav-item {
+    display: block;
+  }
+  #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
+    display: block;
+  }
+}
+
+section.resume-section {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+  max-width: 75rem;
+}
+
+section.resume-section .resume-item .resume-date {
+  min-width: none;
+}
+
+@media (min-width: 768px) {
+  section.resume-section {
+    min-height: 100vh;
+  }
+  section.resume-section .resume-item .resume-date {
+    min-width: 18rem;
+  }
+}
+
+@media (min-width: 992px) {
+  section.resume-section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
+.bg-primary {
+  background-color: #BD5D38 !important;
+}
+
+.text-primary {
+  color: #BD5D38 !important;
+}
+
+a {
+  color: #BD5D38;
+}
+
+a:hover, a:focus, a:active {
+  color: #824027;
+}
+.fz-11 {
+  font-size: 11px
+}
+
+.fz-12 {
+  font-size: 12px
+}
+
+.fz-13 {
+  font-size: 13px
+}
+
+.fz-14 {
+  font-size: 14px
+}
+
+.fz-15 {
+  font-size: 15px
+}
+
+.fz-16 {
+  font-size: 16px
+}
+
+.fz-18 {
+  font-size: 18px
+}
+
+.fz-30 {
+  font-size: 30px
+}
+
+.fz-48 {
+  font-size: 48px !important
+}
+
+.fw100 {
+  font-weight: 100
+}
+
+.fw300 {
+  font-weight: 300
+}
+
+.fw400 {
+  font-weight: 400 !important
+}
+
+.fw500 {
+  font-weight: 500
+}
+
+.f700 {
+  font-weight: 700
+}
+
+.fsi {
+  font-style: italic
+}
+
+.mt-10 {
+  margin-top: 10px
+}
+
+.mt-15 {
+  margin-top: 15px
+}
+
+.mt-20 {
+  margin-top: 20px
+}
+
+.mt-25 {
+  margin-top: 25px
+}
+
+.mt-30 {
+  margin-top: 30px
+}
+
+.mt-35 {
+  margin-top: 35px
+}
+
+.mt-40 {
+  margin-top: 40px
+}
+
+.mt-50 {
+  margin-top: 50px
+}
+
+.mt-60 {
+  margin-top: 60px
+}
+
+.mt-70 {
+  margin-top: 70px
+}
+
+.mt-80 {
+  margin-top: 80px
+}
+
+.mt-100 {
+  margin-top: 100px
+}
+
+.mt-120 {
+  margin-top: 120px
+}
+
+.mt-150 {
+  margin-top: 150px
+}
+
+.ml-0 {
+  margin-left: 0 !important
+}
+
+.ml-5 {
+  margin-left: 5px !important
+}
+
+.ml-10 {
+  margin-left: 10px
+}
+
+.ml-15 {
+  margin-left: 15px
+}
+
+.ml-20 {
+  margin-left: 20px
+}
+
+.ml-30 {
+  margin-left: 30px
+}
+
+.ml-50 {
+  margin-left: 50px
+}
+
+.mr-0 {
+  margin-right: 0 !important
+}
+
+.mr-5 {
+  margin-right: 5px !important
+}
+
+.mr-15 {
+  margin-right: 15px
+}
+
+.mr-10 {
+  margin-right: 10px
+}
+
+.mr-20 {
+  margin-right: 20px
+}
+
+.mr-30 {
+  margin-right: 30px
+}
+
+.mr-50 {
+  margin-right: 50px
+}
+
+.mb-0 {
+  margin-bottom: 0px
+}
+
+.mb-0-i {
+  margin-bottom: 0px !important
+}
+
+.mb-5 {
+  margin-bottom: 5px
+}
+
+.mb-10 {
+  margin-bottom: 10px
+}
+
+.mb-15 {
+  margin-bottom: 15px
+}
+
+.mb-20 {
+  margin-bottom: 20px
+}
+
+.mb-25 {
+  margin-bottom: 25px
+}
+
+.mb-30 {
+  margin-bottom: 30px
+}
+
+.mb-40 {
+  margin-bottom: 40px
+}
+
+.mb-50 {
+  margin-bottom: 50px
+}
+
+.mb-60 {
+  margin-bottom: 60px
+}
+
+.mb-70 {
+  margin-bottom: 70px
+}
+
+.mb-80 {
+  margin-bottom: 80px
+}
+
+.mb-90 {
+  margin-bottom: 90px
+}
+
+.mb-100 {
+  margin-bottom: 100px
+}
+
+.pt-0 {
+  padding-top: 0px
+}
+
+.pt-10 {
+  padding-top: 10px
+}
+
+.pt-15 {
+  padding-top: 15px
+}
+
+.pt-20 {
+  padding-top: 20px
+}
+
+.pt-25 {
+  padding-top: 25px
+}
+
+.pt-30 {
+  padding-top: 30px
+}
+
+.pt-40 {
+  padding-top: 40px
+}
+
+.pt-50 {
+  padding-top: 50px
+}
+
+.pt-60 {
+  padding-top: 60px
+}
+
+.pt-70 {
+  padding-top: 70px
+}
+
+.pt-80 {
+  padding-top: 80px
+}
+
+.pt-90 {
+  padding-top: 90px
+}
+
+.pt-100 {
+  padding-top: 100px
+}
+
+.pt-120 {
+  padding-top: 120px
+}
+
+.pt-150 {
+  padding-top: 150px
+}
+
+.pt-170 {
+  padding-top: 170px
+}
+
+.pb-0 {
+  padding-bottom: 0px
+}
+
+.pb-10 {
+  padding-bottom: 10px
+}
+
+.pb-15 {
+  padding-bottom: 15px
+}
+
+.pb-20 {
+  padding-bottom: 20px
+}
+
+.pb-25 {
+  padding-bottom: 25px
+}
+
+.pb-30 {
+  padding-bottom: 30px
+}
+
+.pb-40 {
+  padding-bottom: 40px
+}
+
+.pb-50 {
+  padding-bottom: 50px
+}
+
+.pb-60 {
+  padding-bottom: 60px
+}
+
+.pb-70 {
+  padding-bottom: 70px
+}
+
+.pb-80 {
+  padding-bottom: 80px
+}
+
+.pb-90 {
+  padding-bottom: 90px
+}
+
+.pb-100 {
+  padding-bottom: 100px
+}
+
+.pb-120 {
+  padding-bottom: 120px
+}
+
+.pb-150 {
+  padding-bottom: 150px
+}
+
+.pr-30 {
+  padding-right: 30px
+}
+
+.pl-30 {
+  padding-left: 30px
+}
+
+.pl-90 {
+  padding-left: 90px
+}
+
+.p-40 {
+  padding: 40px
+}
+
+.float-left {
+  float: left
+}
+
+.float-right {
+  float: right
+}
+
+.text-italic {
+  font-style: italic
+}
+
+.text-white {
+  color: #fff
+}
+
+.text-black {
+  color: #000
+}
+
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+
+#controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  text-align: right;
+}
+
+
+button {
+  padding: 5px;
+  background-color: #DDD;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  margin: 2px;
+}
+
+button:focus {
+  background-color: #FFF;
+  cursor: pointer;
+}
+
+select {
+  width: 200px;
+}
+
+.linkText {
+  animation: none;
+  -webkit-animation: none;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightgray;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.animatedLink {
+  fill: none;
+  stroke: black;
+  opacity: 0.5;
+  stroke-width: 4;
+  stroke-dasharray: 10, 4;
+  animation: flow 0.8s linear infinite;
+  -webkit-animation: flow 0.8s linear infinite;
+}
+
+@keyframes flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 14;
+  }
+}
+
+@-webkit-keyframes flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 14;
+  }
+}
+
+.node-fadein {
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

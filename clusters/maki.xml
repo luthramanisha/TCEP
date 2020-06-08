@@ -1,0 +1,10 @@
+<rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:tour="http://www.protogeni.net/resources/rspec/ext/apt-tour/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.geni.net/resources/rspec/3    http://www.geni.net/resources/rspec/3/request.xsd" type="request">
+    <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-0" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc1" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+85085" exclusive="false">
+        <emulab:vnode name="pcvm1-1" hardware_type="pcvm" disk_image="emulab-ops/UBUNTU16-64-STD:0"/>
+        <host name="node-0.tcep.ch-geni-net.instageni.idre.ucla.edu" ipv4="10.2.1.15"/>
+    </node>
+    <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-1" component_manager_id="urn:publicid:IDN+instageni.idre.ucla.edu+authority+cm" component_id="urn:publicid:IDN+instageni.idre.ucla.edu+node+pc2" sliver_id="urn:publicid:IDN+instageni.idre.ucla.edu+sliver+85086" exclusive="false">
+        <emulab:vnode name="pcvm2-2" hardware_type="pcvm" disk_image="emulab-ops/UBUNTU16-64-STD:0"/>
+        <host name="node-1.tcep.ch-geni-net.instageni.idre.ucla.edu" ipv4="10.2.1.42"/>
+    </node>
+</rspec>

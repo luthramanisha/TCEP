@@ -1,0 +1,25 @@
+{
+  "name": "tcep-gui",
+  "version": "1.0.0",
+  "description": "GUI for TCEP",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luthramanisha/TCEP-Demo"
+  },
+  "author": "Sebastian Hennig <sebastian.hennig@stud.tu-darmstadt.de>",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.1",
+    "morgan-body": "^2.4.5",
+    "request": "^2.88.0",
+    "winston": "^3.1.0"
+  }
+}

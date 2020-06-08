@@ -1,0 +1,10 @@
+val randomRouter = actorSystem.actorOf(RemoteRouterConfig(RoundRobinPool(5), addresses).props(Props[Master]),
+          "disjunction")
+
+Will create 5 children such that
+
+disjunction/c1 will route message to 2551
+disjunction/c2 will route message to 2552
+disjunction/c3 will route message to 2553
+disjunction/c4 will route message to 2554
+disjunction/c5 will route message to 2555

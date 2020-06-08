@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TCEP-Demo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+          integrity="sha256-PF6MatZtiJ8/c9O9HQ8uSUXr++R9KBYu4gbNG5511WE=" crossorigin="anonymous"/>
+
+    <!-- Custom styles for this template -->
+    <link href="src/resume.css" rel="stylesheet">
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+</head>
+
+<body id="page-top">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav" style="background:#181948 !important;">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none"></span>
+        <span class="d-none d-lg-block">
+        <img class="img-fluid mx-auto mb-100" src="resources/tu-darmstadt-logo.png" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <label class="h5 mb-10 text-white" for="query">Query</label>
+                <select class="form-control mb-0" id="query"></select>
+                <br>
+
+                <label class="h5 mb-10 text-white" for="transitionMode">Transition mode</label>
+                <select class="form-control mb-0" id="transitionMode"></select>
+                <br>
+
+                <label class="h5 mb-10 text-white" for="algorithms">QoS requirements</label>
+                <select class="form-control mb-0" id="algorithms"></select>
+                <br>
+
+                <button class="btn btn-primary circle mb-20" onclick="start()">Start</button>
+                <button class="btn btn-danger circle mb-20" onclick="stop()">Stop</button>
+                <br>
+
+                <button class="btn btn-info circle mb-20" onclick="transition()">Transition</button>
+                <button class="btn btn-info circle mb-20" onclick="environmentalChange()">Scale Out
+                </button>
+                <br>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <label class="h5 mb-10 text-white" for="auto-reload">Auto refresh GUI (3 sec)</label>
+        <input id="auto-reload" type="checkbox" checked onclick="didChangeAutoReload()">
+        <br>
+
+        <label class="h5 mb-10 text-white" for="auto-reload">Auto Transitions</label>
+        <input id="auto-transition" type="checkbox" checked onclick="didChangeAutoTransitions()">
+        <br>
+
+        <label class="h5 mb-10 text-white" for="auto-reload">Hide Link Data</label>
+        <input id="hide-link-data" type="checkbox" onclick="didChangeHideLinkData()">
+        <div id="viewSwitch">
+            <button id="switchBtn" class="btn btn-info mb-10" onclick="showLatencySpace()">Legacy</button>
+        </div>
+        <div class="nav-item mt-30 mb-30">
+            <div class="social-icons">
+                <a href="https://github.com/luthramanisha/TCEP-Demo" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.youtube.com/watch?v=ICVTkCRASck" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid p-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+        <div class="w-100">
+            <h1 class="mb-0">TCEP
+            </h1>
+            <div class="subheading mb-5">Adapting to Dynamic User Environments by Enabling Transitions between Operator
+                Placement Mechanisms
+            </div>
+            <div id="chartArea">
+            <script src="src/graph.js"></script>
+            <script src="src/tcep.js"></script>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
+
+<!-- Custom scripts for this template -->
+<script src="src/resume.js"></script>
+</body>
+
+</html>
