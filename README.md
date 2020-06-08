@@ -11,8 +11,6 @@ TCEP contributes the following:
 
 To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check it now! 
 
-This project is build on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveCEP/) for specifying complex events and QoS demands. 
-
 [Getting Started](#getting-started)
 
 [Publications](#publications)
@@ -123,6 +121,9 @@ with this line
 ``` 
 <disk_image xmlns="http://www.geni.net/resources/rspec/3" name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
 ```
+
+This project is based on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveCEP/) for specifying complex events and QoS demands. 
+
 ## [Publications](#publications)
 
 + [1] M. Luthra, B. Koldehofe, R. Arif, P. Weisenburger, G. Salvaneschi, TCEP: Adapting to Dynamic User Environments by Enabling Transitions between Operator Placement Mechanisms. In Proceedings of the 12th ACM International Conference on Distributed and Event-based Systems (DEBS ’18), pp. 136–147. https://doi.org/10.1145/3210284.3210292
