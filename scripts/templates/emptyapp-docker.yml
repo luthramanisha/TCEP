@@ -1,0 +1,23 @@
+
+  worker:
+    image: {{image}}
+    environment:
+      - MAIN=tcep.machinenodes.EmptyApp
+      - ARGS=--port {{inport}}
+      - LOG_FILE_PATH=/app/logs
+    depends_on:
+      - simulator
+    volumes:
+      - $HOME/logs:/app/logs
+    networks:
+      - main
+    deploy:
+      replicas: {{n_replicas}}
+      restart_policy:
+        condition: on-failure
+      placement:
+      # place replicas of this service evenly across nodes labeled as worker, differentiated by their hostname
+        constraints: [node.labels.worker == true]
+        preferences:
+              - spread: node.hostname
+    privileged: true

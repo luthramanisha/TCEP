@@ -1,0 +1,18 @@
+
+  {{name}}:
+    image: {{image}}
+    environment:
+      - MAIN=tcep.machinenodes.ConsumerApp
+      - ARGS=--dir ./logs --ip {{name}} --port {{inport}} --kind {{kind}}
+      - LOG_FILE_PATH=/app/logs
+    volumes:
+      - $HOME/logs:/app/logs
+    networks:
+      - main
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.labels.subscriber == true]
+    privileged: true

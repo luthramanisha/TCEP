@@ -1,0 +1,20 @@
+
+  {{name}}:
+    image: {{image}}
+    environment:
+      - MAIN=tcep.machinenodes.VivaldiApp
+      - ARGS=--port {{inport}} --ip viv
+      - LOG_FILE_PATH=/app/logs
+    depends_on:
+      - {{ntpcontainer}}
+    ports:
+      - {{inport}}:{{outport}}
+    networks:
+      - main
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.hostname == {{hostname}}]
+    privileged: true

@@ -1,0 +1,22 @@
+
+  {{name}}:
+    image: {{image}}
+    environment:
+      - MAIN=tcep.machinenodes.PublisherApp
+      - ARGS=--ip {{name}} --port {{inport}} --kind {{publisher_kind}} --numberOfPublishers {{publisher_id}}
+      - LOG_FILE_PATH=/app/logs
+    volumes:
+      - $HOME/logs:/app/logs
+    networks:
+      - main
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        # place replicas of this service evenly across nodes labeled as publisher, differentiated by their hostname
+        # if there are more services than publisher nodes, some node will host multiple publisher services
+        constraints: [node.labels.publisher == true]
+        preferences:
+          - spread: node.hostname
+    privileged: true

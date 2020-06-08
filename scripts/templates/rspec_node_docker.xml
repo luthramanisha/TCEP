@@ -1,0 +1,11 @@
+    <node xmlns="http://www.geni.net/resources/rspec/3" client_id="{{node-id}}">
+        <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/EG-VM-noTxt-centered.svg"/>
+        <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+        <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+        <sliver_type xmlns="http://www.geni.net/resources/rspec/3" name="XOLarge">
+             <disk_image xmlns="http://www.geni.net/resources/rspec/3" name="http://geni-images.renci.org/images/standard/docker/ubuntu-14.0.4/ubuntu-14.0.4-docker.xml" version="b4ef61dbd993c72c5ac10b84650b33301bbf6829"/>
+    </sliver_type>
+    <hardware_type xmlns="http://www.geni.net/resources/rspec/3" name="orca-vm-cloud"/>
+        <services xmlns="http://www.geni.net/resources/rspec/3"/>
+    </node>
+

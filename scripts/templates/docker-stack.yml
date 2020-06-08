@@ -1,0 +1,7 @@
+# You can set the hostname of docker host by using this command `sudo hostname <name>`
+version: "3.7"
+services:
+{{containers}}
+
+networks:
+  main:

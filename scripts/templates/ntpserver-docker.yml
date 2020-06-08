@@ -1,0 +1,14 @@
+
+  {{name}}:
+    image: cloudwattfr/ntpserver:latest
+    ports:
+      - {{inport}}:{{outport}}
+    networks:
+      - main
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.hostname == {{hostname}}]
+    privileged: true

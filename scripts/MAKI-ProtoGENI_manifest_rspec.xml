@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:tour="http://www.protogeni.net/resources/rspec/ext/apt-tour/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.geni.net/resources/rspec/3    http://www.geni.net/resources/rspec/3/manifest.xsd" type="manifest" expires="2019-08-08T12:23:29Z">
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-0" component_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+node+maki04" component_manager_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+authority+cm" sliver_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+sliver+166" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="makivm04-1.maki.e-technik.tu-darmstadt.de" port="22" username="nielsdan"/>
+      <login authentication="ssh-keys" hostname="makivm04-1.maki.e-technik.tu-darmstadt.de" port="22" username="manishal"/>
+      <emulab:console server="makivm04-1.maki.e-technik.tu-darmstadt.de"/>
+    </services>
+    <emulab:vnode name="makivm04-1" hardware_type="pcvm"/>
+    <host name="node-0.CEPFog.ch-geni-net.maki.e-technik.tu-darmstadt.de" ipv4="130.83.213.6"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-1" component_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+node+maki04" component_manager_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+authority+cm" sliver_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+sliver+167" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="makivm04-2.maki.e-technik.tu-darmstadt.de" port="22" username="nielsdan"/>
+      <login authentication="ssh-keys" hostname="makivm04-2.maki.e-technik.tu-darmstadt.de" port="22" username="manishal"/>
+      <emulab:console server="makivm04-2.maki.e-technik.tu-darmstadt.de"/>
+    </services>
+    <emulab:vnode name="makivm04-2" hardware_type="pcvm"/>
+    <host name="node-1.CEPFog.ch-geni-net.maki.e-technik.tu-darmstadt.de" ipv4="130.83.213.7"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-2" component_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+node+maki04" component_manager_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+authority+cm" sliver_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+sliver+168" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="makivm04-3.maki.e-technik.tu-darmstadt.de" port="22" username="nielsdan"/>
+      <login authentication="ssh-keys" hostname="makivm04-3.maki.e-technik.tu-darmstadt.de" port="22" username="manishal"/>
+      <emulab:console server="makivm04-3.maki.e-technik.tu-darmstadt.de"/>
+    </services>
+    <emulab:vnode name="makivm04-3" hardware_type="pcvm"/>
+    <host name="node-2.CEPFog.ch-geni-net.maki.e-technik.tu-darmstadt.de" ipv4="130.83.213.8"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-3" component_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+node+maki04" component_manager_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+authority+cm" sliver_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+sliver+169" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="makivm04-4.maki.e-technik.tu-darmstadt.de" port="22" username="nielsdan"/>
+      <login authentication="ssh-keys" hostname="makivm04-4.maki.e-technik.tu-darmstadt.de" port="22" username="manishal"/>
+      <emulab:console server="makivm04-4.maki.e-technik.tu-darmstadt.de"/>
+    </services>
+    <emulab:vnode name="makivm04-4" hardware_type="pcvm"/>
+    <host name="node-3.CEPFog.ch-geni-net.maki.e-technik.tu-darmstadt.de" ipv4="130.83.213.9"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-4" component_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+node+maki04" component_manager_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+authority+cm" sliver_id="urn:publicid:IDN+maki.e-technik.tu-darmstadt.de+sliver+170" exclusive="false">
+    <icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <site xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" id="Site 1"/>
+    <routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="makivm04-5.maki.e-technik.tu-darmstadt.de" port="22" username="nielsdan"/>
+      <login authentication="ssh-keys" hostname="makivm04-5.maki.e-technik.tu-darmstadt.de" port="22" username="manishal"/>
+      <emulab:console server="makivm04-5.maki.e-technik.tu-darmstadt.de"/>
+    </services>
+    <emulab:vnode name="makivm04-5" hardware_type="pcvm"/>
+    <host name="node-4.CEPFog.ch-geni-net.maki.e-technik.tu-darmstadt.de" ipv4="130.83.213.10"/>
+  </node>
+  <rs:site_info xmlns:rs="http://www.protogeni.net/resources/rspec/ext/site-info/1">
+    <rs:location country="DE" latitude="49.8" longitude="8.6"/>
+  </rs:site_info>
+</rspec>

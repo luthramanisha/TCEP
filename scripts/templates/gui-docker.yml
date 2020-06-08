@@ -1,0 +1,14 @@
+
+  {{name}}:
+    image: {{image}}
+    ports:
+       - {{inport}}:{{outport}}
+    networks:
+       - main
+    deploy:
+      replicas: 1
+      restart_policy:
+         condition: on-failure
+      placement:
+        constraints: [node.labels.subscriber == true]
+    privileged: true

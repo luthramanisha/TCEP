@@ -1,0 +1,194 @@
+<rspec xmlns="http://www.geni.net/resources/rspec/3" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:tour="http://www.protogeni.net/resources/rspec/ext/apt-tour/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.geni.net/resources/rspec/3    http://www.geni.net/resources/rspec/3/request.xsd" type="request">
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-0" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303071" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-1.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-1.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030611vm-1.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030611vm-1" hardware_type="pcvm"/>
+    <host name="node-0.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.154"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-1" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303072" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-2.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-2.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030611vm-2.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030611vm-2" hardware_type="pcvm"/>
+    <host name="node-1.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.155"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-2" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303073" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-3.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-3.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030611vm-3.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030611vm-3" hardware_type="pcvm"/>
+    <host name="node-2.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.156"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-3" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030617" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303067" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-1.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-1.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030617vm-1.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030617vm-1" hardware_type="pcvm"/>
+    <host name="node-3.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.160"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-4" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303074" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-4.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-4.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030611vm-4.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030611vm-4" hardware_type="pcvm"/>
+    <host name="node-4.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.157"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-5" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030617" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303068" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-2.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-2.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030617vm-2.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030617vm-2" hardware_type="pcvm"/>
+    <host name="node-5.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.161"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-6" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030617" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303069" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-3.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-3.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030617vm-3.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030617vm-3" hardware_type="pcvm"/>
+    <host name="node-6.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.162"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-7" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303075" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-5.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-5.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030611vm-5.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030611vm-5" hardware_type="pcvm"/>
+    <host name="node-7.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.158"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-8" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303076" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-6.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030611vm-6.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030611vm-6.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030611vm-6" hardware_type="pcvm"/>
+    <host name="node-8.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.159"/>
+  </node>
+  <node xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" client_id="node-9" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030617" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303070" exclusive="true">
+    <jacks:icon xmlns="http://www.protogeni.net/resources/rspec/ext/jacks/1" url="https://portal.geni.net/images/Xen-VM.svg"/>
+    <emulab:routable_control_ip xmlns="http://www.protogeni.net/resources/rspec/ext/emulab/1"/>
+    <sliver_type name="emulab-xen">
+      <disk_image name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
+      <emulab:xen cores="1" disk="15" ram="4096"/>
+    </sliver_type>
+    <services>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-4.wisc.cloudlab.us" port="22" username="manish2"/>
+      <login authentication="ssh-keys" hostname="c220g1-030617vm-4.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="c220g1-030617vm-4.wisc.cloudlab.us"/>
+    </services>
+    <emulab:vnode name="c220g1-030617vm-4" hardware_type="pcvm"/>
+    <host name="node-9.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.223.163"/>
+  </node>
+  <tour:rspec_tour xmlns="http://www.protogeni.net/resources/rspec/ext/apt-tour/1">
+    <description xmlns="" type="markdown">TCEP-10-Docker</description>
+  </tour:rspec_tour>
+  <emulab:portal name="cloudlab" url="https://www.cloudlab.us/status.php?uuid=fc792484-b456-11e9-8677-e4434b2381fc"/>
+  <emulab:vhost client_id="c220g1-030611" exclusive="1" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030611" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303077">
+    <emulab:vnode name="c220g1-030611" hardware_type="c220g1"/>
+    <emulab:host name="vhost-1.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.222.61"/>
+    <emulab:services>
+      <emulab:login authentication="ssh-keys" hostname="c220g1-030611.wisc.cloudlab.us" port="22" username="manish2"/>
+      <emulab:login authentication="ssh-keys" hostname="c220g1-030611.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="boss.wisc.cloudlab.us"/>
+      <emulab:recovery available="true"/>
+    </emulab:services>
+    <emulab:vmlist>
+      <emulab:vm client_id="node-0" vnode="c220g1-030611vm-1"/>
+      <emulab:vm client_id="node-8" vnode="c220g1-030611vm-6"/>
+      <emulab:vm client_id="node-1" vnode="c220g1-030611vm-2"/>
+      <emulab:vm client_id="node-7" vnode="c220g1-030611vm-5"/>
+      <emulab:vm client_id="node-2" vnode="c220g1-030611vm-3"/>
+      <emulab:vm client_id="node-4" vnode="c220g1-030611vm-4"/>
+    </emulab:vmlist>
+  </emulab:vhost>
+  <emulab:vhost client_id="c220g1-030617" exclusive="1" component_manager_id="urn:publicid:IDN+wisc.cloudlab.us+authority+cm" component_id="urn:publicid:IDN+wisc.cloudlab.us+node+c220g1-030617" sliver_id="urn:publicid:IDN+wisc.cloudlab.us+sliver+303078">
+    <emulab:vnode name="c220g1-030617" hardware_type="c220g1"/>
+    <emulab:host name="vhost-0.manish2-QV55610.maki-c2-PG0.wisc.cloudlab.us" ipv4="128.104.222.67"/>
+    <emulab:services>
+      <emulab:login authentication="ssh-keys" hostname="c220g1-030617.wisc.cloudlab.us" port="22" username="manish2"/>
+      <emulab:login authentication="ssh-keys" hostname="c220g1-030617.wisc.cloudlab.us" port="22" username="sebast0"/>
+      <emulab:console server="boss.wisc.cloudlab.us"/>
+      <emulab:recovery available="true"/>
+    </emulab:services>
+    <emulab:vmlist>
+      <emulab:vm client_id="node-9" vnode="c220g1-030617vm-4"/>
+      <emulab:vm client_id="node-6" vnode="c220g1-030617vm-3"/>
+      <emulab:vm client_id="node-5" vnode="c220g1-030617vm-2"/>
+      <emulab:vm client_id="node-3" vnode="c220g1-030617vm-1"/>
+    </emulab:vmlist>
+  </emulab:vhost>
+  <rs:site_info xmlns:rs="http://www.protogeni.net/resources/rspec/ext/site-info/1">
+    <rs:location country="US" latitude="43.0667" longitude="89.4000"/>
+  </rs:site_info>
+</rspec>
+
