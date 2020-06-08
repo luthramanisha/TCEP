@@ -13,9 +13,9 @@ To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check it now!
 
 This project is build on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveCEP/) for specifying complex events and QoS demands. 
 
-[Getting Started](https://luthramanisha.github.io/TCEP/#getting-started)
+[Getting Started](#getting-started)
 
-[Publications] (https://luthramanisha.github.io/TCEP/#publications)
+[Publications](#publications)
 
 ## [Getting Started](#getting-started)
 
