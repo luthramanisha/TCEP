@@ -1,0 +1,39 @@
+<configuration>
+
+   <!-- <statusListener class="ch.qos.logback.core.status.NopStatusListener" />  suppress logging configuration output-->
+    <timestamp key = "myTimestamp" datePattern="dd-MM-yyyy'_'HH-mm-ss"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file> ${logFilePath}/${MAIN}-${myTimestamp}.log</file>
+        <append>false</append>
+        <!-- set immediateFlush to false for much higher logging throughput -->
+        <immediateFlush>true</immediateFlush>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level[%thread] %logger{0} - %msg%n%rEx</pattern>
+        </encoder>
+    </appender>
+    <!--
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%X{akkaTimestamp} %-5level[%thread] %logger{0} - %msg%n%rEx</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>%X{akkaTimestamp} %-5level[%thread] %logger{0} - %msg%n%rEx</pattern>
+        </encoder>
+    </appender>
+    -->
+    <root level="INFO">
+        <!--<appender-ref ref="STDOUT"/>-->
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
