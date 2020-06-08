@@ -28,7 +28,7 @@ This project is build on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveC
 
 ### Running on a central server (centralized execution)
 
-Simple build TCEP and run using docker-compose `./scripts/build.sh && docker-compose up`
+Simply build TCEP and run using docker-compose `./scripts/build.sh && docker-compose up`
 
 ### Running cluster simulation (distributed execution)
 
