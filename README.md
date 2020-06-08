@@ -19,10 +19,9 @@ To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check it now!
 
 ### Prerequisites 
 
-* Docker v19.03 or later
+* Docker v19.03 or later and a registry account
 * JDK8
 * sbt
-* Docker registry account
 
 ### Running on a central server (centralized execution)
 
