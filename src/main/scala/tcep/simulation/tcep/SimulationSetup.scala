@@ -591,32 +591,32 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
 
     mode match {
 
-      case Mode.TEST_RELAXATION => for (i <- Range(1, 50))
+      case Mode.TEST_RELAXATION => for (i <- Range(1, 1))
         this.runSimulation(i, PietzuchAlgorithm, transitionMode,
           () => log.info(s"Starks algorithm Simulation Ended for $i"),
           Set(latencyRequirement))
 
-      case Mode.TEST_STARKS => for (i <- Range(1, 50))
+      case Mode.TEST_STARKS => for (i <- Range(1, 1))
         this.runSimulation(i, StarksAlgorithm, transitionMode,
           () => log.info(s"Starks algorithm Simulation Ended for $i"),
           Set(messageHopsRequirement))
 
-      case Mode.TEST_RIZOU => for (i <- Range(1, 50))
+      case Mode.TEST_RIZOU => for (i <- Range(1, 1))
         this.runSimulation(i, RizouAlgorithm, transitionMode,
           () => log.info(s"Starks algorithm Simulation Ended for $i"),
           Set(loadRequirement)) // use load requirement to make it "selectable" for RequirementBasedMAPEK/BenchmarkingNode
 
-      case Mode.TEST_PC => for (i <- Range (1, 50) )
+      case Mode.TEST_PC => for (i <- Range (1, 1) )
         this.runSimulation (i,  MobilityTolerantAlgorithm, transitionMode,
           () => log.info (s"Producer Consumer algorithm Simulation Ended for $i"),
           Set(latencyRequirement), Some(Set()))
 
-      case Mode.TEST_OPTIMAL => for (i <- Range (1, 50) )
+      case Mode.TEST_OPTIMAL => for (i <- Range (1, 1) )
         this.runSimulation (i, GlobalOptimalBDPAlgorithm, transitionMode,
           () => log.info (s"Producer Consumer algorithm Simulation Ended for $i"),
           Set(latencyRequirement), Some(Set()))
 
-      case Mode.TEST_RANDOM => for (i <- Range (1, 50) )
+      case Mode.TEST_RANDOM => for (i <- Range (1, 1) )
         this.runSimulation (i, RandomAlgorithm, transitionMode,
           () => log.info (s"Producer Consumer algorithm Simulation Ended for $i"),
           Set(latencyRequirement), Some(Set()))
