@@ -141,6 +141,6 @@ This work has been co-funded by the German Research Foundation (DFG) within the 
 
 ## [Contact](#contact)
 
-Feel free to contact [Manisha Luthra](https://www.kom.tu-darmstadt.de/kom-multimedia-communications-lab/people/staff/manisha-luthra/) or [Boris Koldehofe](https://www.rug.nl/staff/b.koldehofe/)
+Feel free to contact [Manisha Luthra](https://www.kom.tu-darmstadt.de/kom-multimedia-communications-lab/people/staff/manisha-luthra/) or [Boris Koldehofe](https://www.rug.nl/staff/b.koldehofe/) for any questions. 
 
 
