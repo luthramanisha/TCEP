@@ -9,7 +9,7 @@ TCEP contributes the following:
 + **Lightweight learning strategy** for selection of operator placement for the given QoS demands
 + **Heterogeneous infrastructure support** for execution of operator graphs
 
-To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check it now! 
+To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our [live demo](http://35.246.223.49:3000/) at Google cloud! 
 
 [Getting Started](#getting-started)
 
