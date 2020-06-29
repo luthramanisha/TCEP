@@ -15,6 +15,10 @@ To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our [live
 
 [Publications](#publications)
 
+[Acknowledgement](#acknowledgement)
+
+[Contact](#contact)
+
 ## [Getting Started](#getting-started)
 
 ### Prerequisites 
@@ -131,11 +135,11 @@ This project is based on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveC
 + M. Luthra and B. Koldehofe, ProgCEP: A Programming Model for Complex Event Processing over Fog Infrastructure. In Proceedings of the 2nd International Workshop on Distributed Fog Services Design (DFSD ’19). <https://doi.org/10.1145/3366613.3368121>
 
 
-## Acknowledgements
+## [Acknowledgement](#acknowledgement)
 
 This work has been co-funded by the German Research Foundation (DFG) within the Collaborative Research Center (CRC) 1053 -- MAKI.
 
-## Contact
+## [Contact](#contact)
 
 Feel free to contact [Manisha Luthra](https://www.kom.tu-darmstadt.de/kom-multimedia-communications-lab/people/staff/manisha-luthra/) or [Boris Koldehofe](https://www.rug.nl/staff/b.koldehofe/)
 
