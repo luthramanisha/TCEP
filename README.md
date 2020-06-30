@@ -137,7 +137,7 @@ This project is based on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveC
 
 ## [Acknowledgement](#acknowledgement)
 
-This work has been co-funded by the German Research Foundation (DFG) within the Collaborative Research Center (CRC) 1053 -- MAKI.
+This work has been co-funded by the German Research Foundation (DFG) within the [Collaborative Research Center (CRC) 1053 -- MAKI](https://www.maki.tu-darmstadt.de/sfb_maki/ueber_maki/index.en.jsp).
 
 ## [Contact](#contact)
 
