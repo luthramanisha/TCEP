@@ -9,7 +9,7 @@ TCEP contributes the following:
 + **Lightweight learning strategy** for selection of operator placement for the given QoS demands
 + **Heterogeneous infrastructure support** for execution of operator graphs
 
-To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our [live demo](http://35.246.223.49:3000/) at Google cloud! 
+To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our <a href="http://35.246.223.49:3000/" target="_blank">live demo</a> at Google cloud! 
 
 [Getting Started](#getting-started)
 
@@ -125,22 +125,22 @@ with this line
 <disk_image xmlns="http://www.geni.net/resources/rspec/3" name="urn:publicid:IDN+utah.cloudlab.us+image+schedock-PG0:docker-ubuntu16:0"/>
 ```
 
-This project is based on [AdaptiveCEP](https://pweisenburger.github.io/AdaptiveCEP/) for specifying complex events and QoS demands. 
+This project is based on <a href="https://pweisenburger.github.io/AdaptiveCEP/" target="_blank">AdaptiveCEP</a> for specifying complex events and QoS demands. 
 
 ## [Publications](#publications)
 
 + M. Luthra, B. Koldehofe, R. Arif, P. Weisenburger, G. Salvaneschi, TCEP: Adapting to Dynamic User Environments by Enabling Transitions between Operator Placement Mechanisms. In Proceedings of the 12th ACM International Conference on Distributed and Event-based Systems (DEBS ’18), pp. 136–147. <a href="https://doi.org/10.1145/3210284.3210292" target="_blank">10.1145/3210284.3210292</a>
-+ P. Weisenburger, M. Luthra, B. Koldehofe and G. Salvaneschi, Quality-Aware Runtime Adaptation in Complex Event Processing. In IEEE/ACM 12th International Symposium on Software Engineering for Adaptive and Self-Managing Systems (SEAMS '17), pp. 140-151. <https://doi.org/10.1109/SEAMS.2017.10>
-+ M. Luthra, B. Koldehofe, R. Steinmetz, Transitions for Increased Flexibility in Fog Computing: A Case Study on Complex Event Processing. Informatik Spektrum 42, pp. 244–255 (2019). <https://doi.org/10.1007/s00287-019-01191-0>
-+ M. Luthra and B. Koldehofe, ProgCEP: A Programming Model for Complex Event Processing over Fog Infrastructure. In Proceedings of the 2nd International Workshop on Distributed Fog Services Design (DFSD ’19). <https://doi.org/10.1145/3366613.3368121>
++ P. Weisenburger, M. Luthra, B. Koldehofe and G. Salvaneschi, Quality-Aware Runtime Adaptation in Complex Event Processing. In IEEE/ACM 12th International Symposium on Software Engineering for Adaptive and Self-Managing Systems (SEAMS '17), pp. 140-151. <a href="https://doi.org/10.1109/SEAMS.2017.10" target="_blank">10.1109/SEAMS.2017.10</a>
++ M. Luthra, B. Koldehofe, R. Steinmetz, Transitions for Increased Flexibility in Fog Computing: A Case Study on Complex Event Processing. Informatik Spektrum 42, pp. 244–255 (2019). <a href="https://doi.org/10.1007/s00287-019-01191-0" target="_blank">10.1007/s00287-019-01191-0</a>
++ M. Luthra and B. Koldehofe, ProgCEP: A Programming Model for Complex Event Processing over Fog Infrastructure. In Proceedings of the 2nd International Workshop on Distributed Fog Services Design (DFSD ’19). <a href="https://doi.org/10.1145/3366613.3368121" target="_blank">10.1145/3366613.3368121></a>
 
 
 ## [Acknowledgement](#acknowledgement)
 
-This work has been co-funded by the German Research Foundation (DFG) within the [Collaborative Research Center (CRC) 1053 -- MAKI](https://www.maki.tu-darmstadt.de/sfb_maki/ueber_maki/index.en.jsp).
+This work has been co-funded by the German Research Foundation (DFG) within the <a href="https://www.maki.tu-darmstadt.de/sfb_maki/ueber_maki/index.en.jsp" target="_blank">Collaborative Research Center (CRC) 1053 -- MAKI</a>
 
 ## [Contact](#contact)
 
-Feel free to contact [Manisha Luthra](https://www.kom.tu-darmstadt.de/kom-multimedia-communications-lab/people/staff/manisha-luthra/) or [Boris Koldehofe](https://www.rug.nl/staff/b.koldehofe/) for any questions. 
+Feel free to contact <a href="https://www.kom.tu-darmstadt.de/kom-multimedia-communications-lab/people/staff/manisha-luthra/" target="_blank">Manisha Luthra</a> or <a href="https://www.rug.nl/staff/b.koldehofe/" target="_blank">Boris Koldehofe</a> for any questions. 
 
 
