@@ -9,13 +9,6 @@
 log/
 # Created by http://www.gitignore.io
 
-### Server address ###
-docker-stack.yml
-docker-swarm.cfg
-gui/constants.js
-gui/src/graph.js
-src/main/resources/application.conf
-
 ### docker build ###
 dockerbuild/
 
