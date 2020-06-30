@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.Future
 import scala.util.parsing.json.{JSON, JSONArray, JSONObject}
 
 class TCEPSocket(actorSystem: ActorSystem) {
@@ -20,7 +21,7 @@ class TCEPSocket(actorSystem: ActorSystem) {
   private def config: Config = ConfigFactory.load()
   val log = LoggerFactory.getLogger(getClass)
 
-  def startServer(startRequest: (String, String, List[String], String) => Unit, transitionRequest: List[String] => Unit, manualTransitionRequest: String => Unit, stopRequest: () => Unit, statusRequest: () => Map[String, String]): Unit = {
+  def startServer(startRequest: (String, String, List[String], String, String) => Unit, transitionRequest: List[String] => Unit, manualTransitionRequest: String => Unit, stopRequest: () => Unit, statusRequest: () => Map[String, String]): Unit = {
 
     val queries: List[String] = List("Stream", "Filter", "Conjunction", "Disjunction", "Join", "SelfJoin", "AccidentDetection")
     val algorithmNames = config.getConfig("benchmark.general").getStringList("algorithms")
@@ -37,11 +38,13 @@ class TCEPSocket(actorSystem: ActorSystem) {
     })
 
     val modes: List[String] = List("MFGS", "SMS")
+    val mapeks: List[String] = ConfigFactory.load().getStringList("constants.mapek.availableTypes").toList
 
     val algorithmsResponse = JSONObject(Map(
       "algorithms" -> JSONArray(algorithms.toList),
       "modes" -> JSONArray(modes),
-      "queries" -> JSONArray(queries)
+      "queries" -> JSONArray(queries),
+      "mapekTypes" -> JSONArray(mapeks)
     )).toString()
 
     val route =
@@ -56,7 +59,7 @@ class TCEPSocket(actorSystem: ActorSystem) {
       cors() {
         path("status") {
           get {
-            print(statusRequest())
+            log.info("received status request from GUI")
             val response = JSONObject(statusRequest()).toString()
             complete(HttpEntity(ContentTypes.`application/json`, response))
           }
@@ -72,9 +75,10 @@ class TCEPSocket(actorSystem: ActorSystem) {
                   val criteria: List[String] = body.getOrElse("criteria", List("BDP")).asInstanceOf[List[String]]
                   val query: String = body.getOrElse("query", "Join").asInstanceOf[String]
                   val algorithmName: String = body.getOrElse("algorithmStr", "Relaxation").asInstanceOf[String]
+                  val mapek: String = body.getOrElse("mapek", "requirementBased").asInstanceOf[String]
                   log.info("Algorithm name: ", algorithmName)
                   log.info(s"received Start simulation request from GUI with data \n $body")
-                  startRequest(body.getOrElse("mode", "MFGS").asInstanceOf[String], algorithmName, criteria, query)
+                  startRequest(body.getOrElse("mode", "MFGS").asInstanceOf[String], algorithmName, criteria, query, mapek)
                   complete(HttpEntity("success"))
                 }
 
@@ -129,7 +133,6 @@ class TCEPSocket(actorSystem: ActorSystem) {
         path("transition") {
           post {
             entity(as[String]) { entity =>
-              print(entity)
               val result = JSON.parseFull(entity)
               result match {
                 case Some(criteria: List[Any]) =>

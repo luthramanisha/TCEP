@@ -3,7 +3,7 @@ package tcep.simulation.tcep
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-import akka.actor.{ActorLogging, ActorRef, Address, CoordinatedShutdown, RootActorPath}
+import akka.actor.{ActorLogging, ActorRef, Address, Cancellable, CoordinatedShutdown, RootActorPath}
 import akka.cluster.ClusterEvent.CurrentClusterState
 import akka.cluster.{Member, MemberStatus}
 import akka.util.Timeout
@@ -30,8 +30,11 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.duration.FiniteDuration
 import scala.util.{Failure, Success}
 
-class SimulationSetup(directory: Option[File], mode: Int, transitionMode: TransitionConfig, durationInMinutes: Option[Int] = None, startingPlacementAlgorithm: String = PietzuchAlgorithm.name, overridePublisherPorts: Option[Set[Int]] = None, queryString: String = "AccidentDetection", eventRate: String = "1", fixedSimulationProperties: Map[Symbol, Int] = Map(), mapek: String = "requirementBased", requirementStr: String = "latency") extends VivaldiCoordinates with ActorLogging {
-
+class SimulationSetup(directory: Option[File], mode: Int, transitionMode: TransitionConfig, durationInMinutes: Option[Int] = None,
+                      startingPlacementAlgorithm: String = PietzuchAlgorithm.name, overridePublisherPorts: Option[Set[Int]] = None,
+                      queryString: String = "AccidentDetection", eventRate: String = "1", fixedSimulationProperties: Map[Symbol, Int] = Map(),
+                      mapek: String = "requirementBased", requirementStr: String = "latency", loadTestMax: Int = 1
+                     ) extends VivaldiCoordinates with ActorLogging {
 
 
   type StreamData = MobilityData
@@ -47,7 +50,7 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
   var publishers: Map[String, ActorRef] = Map.empty[String, ActorRef]
   val publisherPorts: Set[Int] = if(overridePublisherPorts.isDefined && overridePublisherPorts.get.size >= 2) overridePublisherPorts.get // for unit/integration testing
                        else densityPublisherNodePort :: speedPublisherNodePorts.toList toSet
-  var consumers: ListBuffer[ActorRef] = ListBuffer.empty[ActorRef]
+  var consumers: Vector[ActorRef] = Vector()
   var taskManagerActorRefs: Map[Member, ActorRef] = Map()
   val minimumBandwidthMeasurements = if(isMininetSim) 0 else minNumberOfMembers * (minNumberOfMembers - 1)   // n * (n-1) measurements between n nodes
   var bandwidthMeasurementsStarted = false
@@ -240,17 +243,19 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
     else {
       if (member.hasRole("Consumer")) {
         implicit val timeout = Timeout(20, TimeUnit.SECONDS)
-        val subref = for {
-          actorRef <- context.actorSelection(RootActorPath(member.address) / "user" / "consumer").resolveOne()
-        } yield {
-          actorRef
-        }
-        subref.onComplete {
-          case Success(actorRef) =>
-            log.info(s"SUBSCRIBER found: ${actorRef.path}")
-            this.consumers += actorRef
-          case Failure(exception) =>
-            log.info(s"Failed to get SUBSCRIBER cause of $exception")
+        0 until loadTestMax foreach { i =>
+          val subref = for {
+            actorRef <- context.actorSelection(RootActorPath(member.address) / "user" / s"consumer$i").resolveOne()
+          } yield {
+            actorRef
+          }
+          subref.onComplete {
+            case Success(actorRef) =>
+              log.info(s"SUBSCRIBER found: ${actorRef.path}")
+              this.consumers = this.consumers:+ actorRef
+            case Failure(exception) =>
+              log.info(s"Failed to get SUBSCRIBER cause of $exception")
+          }
         }
       }
       else
@@ -317,7 +322,7 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
       s" publishers: ${publishers.keySet.size} of ${nSpeedPublishers + nSections}, missing publisher port numbers: ${publisherPorts.diff(foundPublisherPorts)}" +
       s" coordinates established: ${coordinatesEstablished} " +
       s" actorrefbroadcast complete: ${publisherActorRefsBroadcastComplete} " +
-      s" num of subscribers: ${consumers.size} " +
+      s" num of subscribers: ${consumers.size} of $loadTestMax" +
       s" started: $simulationStarted")
 
     if(taskManagerActorRefs.size < minNumberOfMembers) {
@@ -347,7 +352,7 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
       taskManagerActorRefs.size >= minNumberOfMembers && // taskManager ActorRefs have been found and broadcast to all other taskManagers      measuredLinks.size >= minimumBandwidthMeasurements && // all links bandwidth measured
       coordinatesEstablished && // all nodes have established their coordinates
       publisherActorRefsBroadcastComplete &&
-      consumers.size >= 1 &&
+      consumers.size >= loadTestMax &&
       !simulationStarted
     ){
       simulationStarted = true
@@ -355,7 +360,7 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
       log.info(s"measured bandwidths: \n ${measuredLinks.toList.sorted.map(e => s"\n ${e._1._1} <-> ${e._1._2} : ${e._2} Mbit/s")}")
       log.info(s"telling publishers to start streams...")
       publishers.foreach(p => p._2 ! StartStreams())
-      this.consumers.last ! SetStreams(this.getStreams())
+      this.consumers.foreach(c => c ! SetStreams(this.getStreams()))
       this.executeSimulation()
 
     } else {
@@ -388,8 +393,8 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
       case "Filter" => stream[StreamData](speedPublishers(0)._1, initialRequirements.toSeq: _*).where(_ => true)
       case "Conjunction" => stream[StreamData](speedPublishers(0)._1).and(stream[StreamData](speedPublishers(1)._1), initialRequirements.toSeq: _*)
       case "Disjunction" => stream[StreamData](speedPublishers(0)._1).or(stream[StreamData](speedPublishers(1)._1), initialRequirements.toSeq: _*)
-      case "Join" => stream[StreamData](speedPublishers(0)._1).join(stream[StreamData](speedPublishers(1)._1), slidingWindow(5.seconds), slidingWindow(5.seconds)).where((_, _) => true, initialRequirements.toSeq: _*)
-      case "SelfJoin" => stream[StreamData](speedPublishers(0)._1).selfJoin(slidingWindow(5.seconds), slidingWindow(5.seconds), initialRequirements.toSeq: _*)
+      case "Join" => stream[StreamData](speedPublishers(0)._1).join(stream[StreamData](speedPublishers(1)._1), slidingWindow(1.seconds), slidingWindow(1.seconds)).where((_, _) => true, initialRequirements.toSeq: _*)
+      case "SelfJoin" => stream[StreamData](speedPublishers(0)._1).selfJoin(slidingWindow(1.seconds), slidingWindow(1.seconds), initialRequirements.toSeq: _*)
       case "AccidentDetection" => accidentQuery(initialRequirements.toSeq: _*)
     }
 
@@ -407,16 +412,17 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
       log.info(s"starting $transitionMode ${placementStrategy.name} algorithm simulation number $i with requirementChanges $requirementChanges \n and query $query")
 
       val sim = new Simulation(cluster, name = s"${transitionMode}-${placementStrategy.name}-${queryStr}-${mapek}-${requirementStr}-$i", directory = directory,
-        query = query, transitionConfig = transitionConfig, publishers = publishers, consumer = consumers.last,
+        query = query, transitionConfig = transitionConfig, publishers = publishers, consumer = consumers(i),
         startingPlacementStrategy = Some(placementStrategy), allRecords = AllRecords(), context = this.context,
         mapekType = this.mapek)
-      var percentage: Double = i*2d
+
+      val percentage: Double = (i + 1 / loadTestMax.toDouble) * 100.0
       val graph = sim.startSimulation(percentage, placementStrategy.name, queryStr, eventRate, startDelay, samplingInterval, totalDuration)(finishedCallback) // (start simulation time, interval, end time (s))
-      graphs = graphs.+(i - 1 -> graph)
+      graphs = graphs.+(i -> graph)
       context.system.scheduler.scheduleOnce(totalDuration)(this.shutdown())
       if (requirementChanges.isDefined && requirementChanges.get.nonEmpty) {
         val firstDelay = requirementChangeDelay.+(FiniteDuration(40, TimeUnit.SECONDS))
-        log.info(s"scheduling first requirement change after $firstDelay for graph ${graphs(i - 1)}")
+        log.info(s"scheduling first requirement change after $firstDelay for graph ${graphs(i)}")
         context.system.scheduler.scheduleOnce(firstDelay)(changeReqTask(i, initialRequirements.toSeq, requirementChanges.get.toSeq))
         //log.info(s"scheduling second requirement change after ${requirementChangeDelay.mul(2)} for graph ${graphs(i-1)}")
         //context.system.scheduler.scheduleOnce(requirementChangeDelay.mul(2))(changeReqTask(i, requirementChanges.get.toSeq, initialRequirements.toSeq))
@@ -442,13 +448,13 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
 
   def changeReqTask(i: Int, oldReq: Seq[Requirement], newReq: Seq[Requirement]): Unit = {
     log.info(s"running scheduled req change for graph $i from oldReq: $oldReq to newReq: $newReq")
-    graphs(i - 1).removeDemand(oldReq)
-    graphs(i - 1).addDemand(newReq)
+    graphs(i).removeDemand(oldReq)
+    graphs(i).addDemand(newReq)
   }
 
   def explicitlyChangeAlgorithmTask(i: Int, algorithm: String): Unit = {
     log.info(s"executing scheduled explicit change algorithm of graph $i to $algorithm")
-    graphs(i - 1).manualTransition(algorithm)
+    graphs(i).manualTransition(algorithm)
   }
 
   // interactive simulation mode: select query and algorithm via GUI at runtime
@@ -457,12 +463,16 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
       var mfgsSims: mutable.MutableList[Simulation] = mutable.MutableList()
       var graphs: mutable.MutableList[QueryGraph] = mutable.MutableList()
       var currentTransitionMode: String = null
-      var currentStrategyName: String = null
-      var currentQuery: String = null
+      @volatile var currentStrategyName: String = null
+      var strategyNameUpdate: Cancellable = null
+      var currentQueryName: String = null
+      var currentMapekName: String = null
       @volatile var simulationStarted = false
       val allReqs = Set(latencyRequirement, loadRequirement, messageHopsRequirement)
 
-      val startSimulationRequest = (transitionMode: String, strategyName: String, optimizationCriteria: List[String], query: String) => {
+      GUIConnector.sendMembers(cluster)
+
+      val startSimulationRequest: (String, String, List[String], String, String) => Unit = (transitionMode: String, strategyName: String, optimizationCriteria: List[String], query: String, mapekName: String) => {
         if (simulationStarted) {
           return
         }
@@ -471,24 +481,21 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
           case "MFGS" => TransitionModeNames.MFGS
           case "SMS" => TransitionModeNames.SMS
         }
-        var globalOptimalBDPQuery: Query = null
+        var currentQuery: Query = null
 
         val newReqs =
           if (optimizationCriteria != null) optimizationCriteria.map(reqName => allReqs.find(_.name == reqName).getOrElse(throw new IllegalArgumentException(s"unknown requirement name: ${reqName}")))
           else {
             Seq(latencyRequirement, messageHopsRequirement)
           }
-        log.debug(s"-----------------------------")
-        log.debug(s"strategy name: ${strategyName}")
-        log.debug(s"-----------------------------")
         log.info(s"-----------------------------")
         log.info(s"strategy name: ${strategyName}")
         log.info(s"-----------------------------")
 
         //globalOptimalBDPQuery = stream[Int](pNames(0)).join(stream[Int](pNames(1)), slidingWindow(windowSize.seconds), slidingWindow(windowSize.seconds)).where((_, _) => true, newReqs:_*)
-        globalOptimalBDPQuery = query match {
+        currentQuery = query match {
           case "Stream" => stream[StreamData](speedPublishers(0)._1, newReqs: _*)
-          case "Filter" => stream[StreamData, StreamData](speedPublishers(0)._1, newReqs: _*).where(_.speed >= _.speed)
+          case "Filter" => stream[StreamData](speedPublishers(0)._1, newReqs: _*).where(_ => true)
           case "Conjunction" => stream[StreamData](speedPublishers(0)._1).and(stream[StreamData](speedPublishers(1)._1), newReqs: _*)
           case "Disjunction" => stream[StreamData](speedPublishers(0)._1).or(stream[StreamData](speedPublishers(1)._1), newReqs: _*)
           case "Join" => stream[StreamData](speedPublishers(0)._1).join(stream[StreamData](speedPublishers(1)._1), slidingWindow(windowSize.seconds), slidingWindow(windowSize.seconds)).where((_, _) => true, newReqs: _*)
@@ -496,17 +503,31 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
           case "AccidentDetection" => accidentQuery(newReqs: _*)
         }
 
-        var percentage: Double = i * 2d
-        val mfgsSim = new Simulation(cluster, name = transitionMode, directory = directory, query = globalOptimalBDPQuery, TransitionConfig(mode, TransitionExecutionModes.CONCURRENT_MODE), publishers = publishers, consumers.last, startingPlacementStrategy = Some(PlacementStrategy.getStrategyByName(strategyName)), allRecords = AllRecords(), fixedSimulationProperties = fixedSimulationProperties, context = this.context)
+        val percentage: Double = (i + 1 / loadTestMax.toDouble) * 100.0
+        val mfgsSim = new Simulation(cluster, name = transitionMode, directory = directory, query = currentQuery,
+          TransitionConfig(mode, TransitionExecutionModes.CONCURRENT_MODE),
+          publishers = publishers, consumers(i),
+          startingPlacementStrategy = Some(PlacementStrategy.getStrategyByName(strategyName)),
+          allRecords = AllRecords(), fixedSimulationProperties = fixedSimulationProperties,
+          context = this.context, mapekType = mapekName)
         mfgsSims += mfgsSim
 
         //start at 20th second, and keep recording data for 5 minutes
         val graph = mfgsSim.startSimulation(percentage, s"$transitionMode-Strategy", query, eventRate, startDelay, samplingInterval, FiniteDuration.apply(0, TimeUnit.SECONDS))(null)
         graphs += graph
 
-        currentStrategyName = graph.getPlacementStrategy()
         currentTransitionMode = transitionMode
-        currentQuery = query
+        currentQueryName = query
+        currentMapekName = mapekName
+        log.info(s"scheduling update for currentStrategyName of graph $i")
+        if(i == 0) { // schedule this only for the first graph so the gui shows only the name of the first graph if multiple are present
+          strategyNameUpdate = cluster.system.scheduler.scheduleAtFixedRate(FiniteDuration(0, TimeUnit.SECONDS), FiniteDuration(1, TimeUnit.SECONDS))(() => {
+            for {stratName <- graph.getPlacementStrategy()} yield {
+              currentStrategyName = stratName
+              log.info(s"updated currentStrategyName $currentStrategyName")
+            }
+          })
+        }
       }
 
       val transitionRequest = (optimizationCriteria: List[String]) => {
@@ -535,6 +556,10 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
         })
         graphs = mutable.MutableList()
         mfgsSims = mutable.MutableList()
+        if(strategyNameUpdate != null) strategyNameUpdate.cancel()
+        currentStrategyName = null
+        currentTransitionMode = null
+        currentQueryName = null
         simulationStarted = false
       }
 
@@ -542,28 +567,26 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
         var strategyName = "none"
         var transitionMode = "none"
         var query = "none"
+        var mapek = "none"
         if (currentStrategyName != null) {
           strategyName = currentStrategyName
         }
         if (currentTransitionMode != null) {
           transitionMode = currentTransitionMode
         }
-
-        if (currentQuery != null) {
-          query = currentQuery
+        if (currentQueryName != null) {
+          query = currentQueryName
         }
-
-        if (graphs.nonEmpty) {
-          val graph = graphs.get(0) // we only get the strategy from one graph assuming that all of them execute the same strategy
-          currentStrategyName = graph.get.getPlacementStrategy()
-        }
+        if (currentMapekName != null)
+          mapek = currentMapekName
 
         val response = Map(
           "placementStrategy" -> strategyName,
           "transitionMode" -> transitionMode,
-          "query" -> query
+          "query" -> query,
+          "mapek" -> mapek
         )
-        print(response)
+        log.info(s"status response: $response")
         response
       }
 
@@ -591,65 +614,65 @@ class SimulationSetup(directory: Option[File], mode: Int, transitionMode: Transi
 
     mode match {
 
-      case Mode.TEST_RELAXATION => for (i <- Range(1, 1))
+      case Mode.TEST_RELAXATION => for (i <- Range(0, loadTestMax))
         this.runSimulation(i, PietzuchAlgorithm, transitionMode,
           () => log.info(s"Starks algorithm Simulation Ended for $i"),
           Set(latencyRequirement))
 
-      case Mode.TEST_STARKS => for (i <- Range(1, 1))
+      case Mode.TEST_STARKS => for (i <- Range(0, loadTestMax))
         this.runSimulation(i, StarksAlgorithm, transitionMode,
           () => log.info(s"Starks algorithm Simulation Ended for $i"),
           Set(messageHopsRequirement))
 
-      case Mode.TEST_RIZOU => for (i <- Range(1, 1))
+      case Mode.TEST_RIZOU => for (i <- Range(0, loadTestMax))
         this.runSimulation(i, RizouAlgorithm, transitionMode,
           () => log.info(s"Starks algorithm Simulation Ended for $i"),
           Set(loadRequirement)) // use load requirement to make it "selectable" for RequirementBasedMAPEK/BenchmarkingNode
 
-      case Mode.TEST_PC => for (i <- Range (1, 1) )
+      case Mode.TEST_PC => for (i <- Range (0, loadTestMax) )
         this.runSimulation (i,  MobilityTolerantAlgorithm, transitionMode,
           () => log.info (s"Producer Consumer algorithm Simulation Ended for $i"),
           Set(latencyRequirement), Some(Set()))
 
-      case Mode.TEST_OPTIMAL => for (i <- Range (1, 1) )
+      case Mode.TEST_OPTIMAL => for (i <- Range (0, loadTestMax) )
         this.runSimulation (i, GlobalOptimalBDPAlgorithm, transitionMode,
           () => log.info (s"Producer Consumer algorithm Simulation Ended for $i"),
           Set(latencyRequirement), Some(Set()))
 
-      case Mode.TEST_RANDOM => for (i <- Range (1, 1) )
+      case Mode.TEST_RANDOM => for (i <- Range (0, loadTestMax) )
         this.runSimulation (i, RandomAlgorithm, transitionMode,
           () => log.info (s"Producer Consumer algorithm Simulation Ended for $i"),
           Set(latencyRequirement), Some(Set()))
 
       case Mode.TEST_SMS =>
-        this.runSimulation(1, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), TransitionConfig(TransitionModeNames.SMS, TransitionExecutionModes.CONCURRENT_MODE),
+        this.runSimulation(0, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), TransitionConfig(TransitionModeNames.SMS, TransitionExecutionModes.CONCURRENT_MODE),
           () => log.info(s"SMS transition $startingPlacementAlgorithm algorithm Simulation ended"),
           Set(latencyRequirement), Some(Set(messageHopsRequirement)))
 
       case Mode.TEST_MFGS =>
-        this.runSimulation(1, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), TransitionConfig(TransitionModeNames.MFGS, TransitionExecutionModes.SEQUENTIAL_MODE),
+        this.runSimulation(0, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), TransitionConfig(TransitionModeNames.MFGS, TransitionExecutionModes.SEQUENTIAL_MODE),
           () => log.info(s"MFGS transition $startingPlacementAlgorithm algorithm Simulation ended"),
           Set(latencyRequirement), Some(Set(reqChange)))
 
-      case Mode.TEST_GUI => this.testGUI(0, 0, 5)
+      case Mode.TEST_GUI => this.testGUI(0, 0, 1)
       case Mode.DO_NOTHING => log.info("simulation ended!")
       case Mode.TEST_LIGHTWEIGHT =>
-        this.runSimulation(1, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
+        this.runSimulation(0, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
           () => log.info(s"Lightweight transitions simulation ended"),
           Set(latencyRequirement), Some(Set(reqChange)))
 
       case Mode.MADRID_TRACES =>
-        this.runSimulation(1, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
+        this.runSimulation(0, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
           () => log.info("MadridTrace simulation ended"),
           Set(latencyRequirement), Some(Set()))
 
       case Mode.LINEAR_ROAD =>
-        this.runSimulation(1, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
+        this.runSimulation(0, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
           () => log.info("LinearRoad simulation ended"),
           Set(latencyRequirement), Some(Set()))
 
       case Mode.YAHOO_STREAMING =>
-        this.runSimulation(1, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
+        this.runSimulation(0, PlacementStrategy.getStrategyByName(startingPlacementAlgorithm), transitionMode,
           () => log.info("YahooStreaming simulation ended"),
           Set(latencyRequirement), Some(Set()))
     }

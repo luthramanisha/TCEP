@@ -21,13 +21,16 @@ object ConsumerApp extends ConfigurationParser with App {
   DistVivaldiActor.createVivIfNotExists(actorSystem)
   logger.info("Adding Consumer")
   //actorSystem.actorOf(Props(classOf[TaskManagerActor]), "TaskManager")
-  options.getOrElse('kind, "none") match {
-    case "AvgSpeed" => actorSystem.actorOf(Props[AvgSpeedConsumer], "consumer")
-    case "Accident" => actorSystem.actorOf(Props[AccidentConsumer], "consumer")
-    case "Toll" => actorSystem.actorOf(Props[TollComputingConsumer], "consumer")
-    case "AdAnalysis" => actorSystem.actorOf(Props[AnalysisConsumer], "consumer")
+  val loadTestMax = options.getOrElse('loadTestMax, "1").toInt
+  0 until loadTestMax map { i =>
+    val consumer = options.getOrElse('kind, "none") match {
+      case "AvgSpeed" => actorSystem.actorOf(Props[AvgSpeedConsumer], s"consumer$i")
+      case "Accident" => actorSystem.actorOf(Props[AccidentConsumer], s"consumer$i")
+      case "Toll" => actorSystem.actorOf(Props[TollComputingConsumer], s"consumer$i")
+      case "AdAnalysis" => actorSystem.actorOf(Props[AnalysisConsumer], s"consumer$i")
+    }
+    logger.info(s"started consumer actor $consumer")
   }
-
 
   override def getRole: String = "Consumer"
   //override def getRole: String = "Subscriber"

@@ -53,6 +53,7 @@ object SimulationRunner extends App with ConfigurationParser {
         case 0 => TransitionExecutionModes.SEQUENTIAL_MODE
         case 1 => TransitionExecutionModes.CONCURRENT_MODE
       }
+      val loadTestMax = options.getOrElse('loadTestMax, "1").toInt
       logger.info(s"parsed options $options \n $transitionStrategy $transitionExecutionMode")
 
       val actorSystem: ActorSystem = ActorSystem(config.getString("clustering.cluster.name"), config)
@@ -71,7 +72,7 @@ object SimulationRunner extends App with ConfigurationParser {
       }
       val fixedSimulationProperties = Map('baseLatency -> baseLatency.toInt, 'maxPubToClientHops -> maxPubToClientHops.toInt)
       val taskManagerActorProps = Props(classOf[TaskManagerActor]).withMailbox("prio-mailbox")
-      val simulatorActorProps = Props(new SimulationSetup(directory, mode.toInt, TransitionConfig(transitionStrategy, transitionExecutionMode), Some(duration.toInt), initialAlgorithm, None, query, eventRate, fixedSimulationProperties, mapek, requirement)).withMailbox("prio-mailbox")
+      val simulatorActorProps = Props(new SimulationSetup(directory, mode.toInt, TransitionConfig(transitionStrategy, transitionExecutionMode), Some(duration.toInt), initialAlgorithm, None, query, eventRate, fixedSimulationProperties, mapek, requirement, loadTestMax)).withMailbox("prio-mailbox")
       logger.info(s"taskManager mailbox: ${taskManagerActorProps.mailbox} \n simulator mailbox: ${simulatorActorProps.mailbox}")
       actorSystem.actorOf(taskManagerActorProps, "TaskManager")
       actorSystem.actorOf(simulatorActorProps, "SimulationSetup")

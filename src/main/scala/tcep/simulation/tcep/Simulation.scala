@@ -22,15 +22,16 @@ import tcep.machinenodes.consumers.Consumer.{GetAllRecords, GetMonitorFactories,
 import tcep.machinenodes.{EventPublishedCallback, GraphCreatedCallback}
 import tcep.placement.PlacementStrategy
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 class Simulation(cluster: Cluster, name: String, directory: Option[File], query: Query, transitionConfig: TransitionConfig,
                  publishers: Map[String, ActorRef], consumer: ActorRef, startingPlacementStrategy: Option[PlacementStrategy],
                  allRecords: AllRecords, fixedSimulationProperties: Map[Symbol, Int] = Map(), context: ActorContext,
                  mapekType: String = ConfigFactory.load().getString("constants.mapek.type")) {
 
+  lazy val blockingIoDispatcher: ExecutionContext = cluster.system.dispatchers.lookup("blocking-io-dispatcher")
+  implicit val ec: ExecutionContext = blockingIoDispatcher
   val ldt = LocalDateTime.now
   val out = directory map { directory => new PrintStream(new File(directory, s"$name-$ldt.csv"))
   } getOrElse java.lang.System.out
@@ -62,7 +63,7 @@ class Simulation(cluster: Cluster, name: String, directory: Option[File], query:
     log.info(s"Monitors are: $monitors")
     queryGraph = new QueryGraph(context, Cluster(context.system), query, transitionConfig, publishers, startingPlacementStrategy,
       Some(GraphCreatedCallback()), monitors, Some(allRecords), consumer, fixedSimulationProperties, mapekType)
-    queryGraph.createAndStart(monitors)(Some(EventPublishedCallback()))
+    queryGraph.createAndStart(monitors)(None)
     guiUpdater = context.system.scheduler.schedule(0 seconds, 60 seconds)(GUIConnector.sendMembers(cluster))
     queryGraph
   }

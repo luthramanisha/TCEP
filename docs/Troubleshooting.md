@@ -52,3 +52,8 @@ This will allow sudo commands to be executed without entering the password for t
 
 * If you see the issue "Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.35/info: dial unix /var/run/docker.sock: connect: permission denied" it usually means that the current user
 you are using is not permitted to access the docker daemon. You can fix this by adding the current user to the group again by issuing the following command on the respective cluster node `sudo usermod -a -G docker $USER`
+
+* Google cloud running TCEP instance at 35.246.223.49
+Enabled port forwarding for GUI as explained [here](https://docs.bitnami.com/google/faq/administration/use-firewall/)
+
+Important is to add the tag in running VM instance on the VM instance details page. 

@@ -3,7 +3,7 @@
 # Modified by: Sebastian Hennig
 # Description: Builds and creates the docker image of TCEP
 
-work_dir="$(cd "$(dirname "$0")" ; pwd -P)/.."
+work_dir="$(cd "$(dirname "$0")" ; pwd -P)/../"
 
 cd $work_dir
 sbt clean

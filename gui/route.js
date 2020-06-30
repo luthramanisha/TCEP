@@ -4,9 +4,10 @@ const router = express.Router()
 const Placement = require('./placement')
 const Constants = require('./constants')
 // communication with TCEPSocket of simulator application
-console.log(Constants.SERVER)
+console.log("routing interactive requests to TCEP application at ", Constants.TCEP_SERVER, Constants.TCEP_PORT)
 
 router.get('/data', (req, res) => {
+    console.log('received /data request')
     const placement = Placement.getPlacement()
     const previousPlacement = Placement.getPreviousPlacement()
     const transitions = Placement.getTransitions()
@@ -29,13 +30,18 @@ router.get('/data', (req, res) => {
             usage: previousPlacement[key].usage
         })
     }
-    request(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/status`, (err, resp, body) => {
-        const response = { nodes, previousNodes, transitions, transitionMode, transitionTime, consumerData }
-        if (!err) {
-            response['status'] = JSON.parse(body);
-        }
-        res.send(response);
-    })
+    const response = {nodes, previousNodes, transitions, transitionMode, transitionTime, consumerData}
+    if (Constants.INTERACTIVE_SIMULATION_ENABLED) {
+        request(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/status`, (err, resp, body) => {
+            console.log('requesting /status from TCEP server for a /data request')
+            if (!err) {
+                response['status'] = JSON.parse(body);
+            }
+            res.send(response);
+        })
+    } else {
+        res.send(response)
+    }
 });
 
 router.post('/setOperator', (req, res) => {
@@ -70,46 +76,50 @@ router.get('/', (req, res) => {
 router.use('/src', express.static('src'))
 
 router.get('/algorithms', (req, res) => {
-    request(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/algorithms`, (err, resp, body) => {
+    console.log("sending algorithms request to port ", Constants.TCEP_PORT, " on ",  Constants.TCEP_SERVER)
+    request(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/algorithms`, (err, resp, body) => {
         res.send(body);
+        console.log("received algorithms", err, body)
     })
 })
 
 router.get('/status', (req, res) => {
-    request(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/status`, (err, resp, body) => {
+    request(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/status`, (err, resp, body) => {
         res.send(body);
+        console.log("received status", err, body)
     })
 })
 
 router.post('/transition', (req, res) => {
     Placement.clearTransitions()
-    request.post(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/transition`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
+    request.post(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/transition`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
         res.send(body);
     })
 })
 
 router.post('/manualTransition', (req, res) => {
     Placement.clearTransitions()
-    request.post(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/manualTransition`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
+    request.post(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/manualTransition`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
         res.send(body);
     })
 })
 
 router.post('/start', (req, res) => {
-    request.post(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/start`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
+    request.post(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/start`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
+        console.log("sent /start", req.body)
         res.send(body);
     })
 })
 
 router.post('/stop', (req, res) => {
     Placement.clear()
-    request.post(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/stop`, (err, resp, body) => {
+    request.post(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/stop`, (err, resp, body) => {
         res.send(body);
     })
 })
 
 router.post('/autoTransition', (req, res) => {
-    request.post(`http://${Constants.SERVER}:${Constants.TCEP_PORT}/autoTransition`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
+    request.post(`http://${Constants.TCEP_SERVER}:${Constants.TCEP_PORT}/autoTransition`, { form: JSON.stringify(req.body) }, (err, resp, body) => {
         res.send(body);
     })
 })

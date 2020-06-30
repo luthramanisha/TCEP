@@ -127,7 +127,7 @@ trait MFGSMode extends TransitionMode {
           val timestamp = System.currentTimeMillis()
           val migrationTime = timestamp - downTime.get
           val nodeSelectionTime = timestamp - startTime
-          GUIConnector.sendOperatorTransitionUpdate(self, successor, algorithm.name, timestamp, migrationTime, nodeSelectionTime, parents, newHostInfo, isRootOperator)(cluster.selfAddress)
+          GUIConnector.sendOperatorTransitionUpdate(self, successor, algorithm.name, timestamp, migrationTime, nodeSelectionTime, parents, newHostInfo, isRootOperator)(cluster.selfAddress, blockingIoDispatcher)
           notifyMAPEK(cluster, successor) // notify mapek knowledge about operator change
           transitionLog(s"received ACK for StartExecutionWithData from successor ${System.currentTimeMillis() - downTime.get}ms after stopping events (total time: $migrationTime ms), handing control over to requester and shutting down self")
           val placementOverhead = newHostInfo.operatorMetrics.accPlacementMsgOverhead

@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const morganBody = require('morgan-body')
 const winston = require('winston')
 const cors = require('cors')
-
+const Constants = require('./constants')
 const route = require('./route')
 
 app.use(cors({
@@ -19,6 +19,6 @@ morganBody(app)
 app.use(morgan('tiny'))
 app.use(route)
 
-app.listen(3000, () => {
-    console.log('Started TCEP data server')
+app.listen(Constants.GUI_PORT, () => {
+    console.log('Started TCEP data server with port ', Constants.GUI_PORT)
 })

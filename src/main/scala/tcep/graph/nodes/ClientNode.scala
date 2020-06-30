@@ -64,7 +64,7 @@ class ClientNode(var rootOperator: ActorRef, /*monitorFactories: Array[MonitorFa
         log.info(s"replacing operator node after $timetaken ms \n $rootOperator \n with replacement $replacement")
         replaceOperator(replacement)
         transitionLog(s"transition complete after $timetaken ms (from $oldParent to $replacement \n\n")
-        GUIConnector.sendTransitionTimeUpdate(timetaken.toDouble / 1000)
+        GUIConnector.sendTransitionTimeUpdate(timetaken.toDouble / 1000)(blockingIoDispatcher)
       }
     }
 
@@ -79,7 +79,7 @@ class ClientNode(var rootOperator: ActorRef, /*monitorFactories: Array[MonitorFa
       //val arrival = System.nanoTime()
       Events.updateMonitoringData(log, event, hostInfo, currentLoad) // also updates hostInfo.operatorMetrics.accumulatedBDP
       if(!guiBDPUpdateSent) {
-        GUIConnector.sendBDPUpdate(hostInfo.graphTotalBDP, DistVivaldiActor.getLatencyValues())(selfAddress = cluster.selfAddress) // this is the total BDP of the entire graph
+        GUIConnector.sendBDPUpdate(hostInfo.graphTotalBDP, DistVivaldiActor.getLatencyValues())(cluster.selfAddress, blockingIoDispatcher) // this is the total BDP of the entire graph
         guiBDPUpdateSent = true
         SpecialStats.debug(s"$this", s"hostInfo after update: ${hostInfo.operatorMetrics}")
       }
@@ -105,7 +105,7 @@ class ClientNode(var rootOperator: ActorRef, /*monitorFactories: Array[MonitorFa
       rootOperator ! ShutDown()
       log.info(s"Stopping self as received shut down message from ${sender().path.name}, forwarding it to $rootOperator")
       self ! PoisonPill
-      this.consumer ! PoisonPill
+      //this.consumer ! PoisonPill
     }
 
     case _ =>

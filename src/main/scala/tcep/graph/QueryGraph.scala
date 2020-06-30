@@ -26,7 +26,7 @@ import tcep.simulation.tcep.{AllRecords, GUIConnector}
 import tcep.utils.SpecialStats
 
 import scala.concurrent.duration.{FiniteDuration, _}
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 /**
@@ -40,6 +40,7 @@ class QueryGraph(context: ActorContext, cluster: Cluster, query: Query, transiti
   val log = LoggerFactory.getLogger(getClass)
   implicit val timeout = Timeout(15 seconds)
   implicit val ec = context.system.dispatcher
+  lazy val blockingIoDispatcher: ExecutionContext = cluster.system.dispatchers.lookup("blocking-io-dispatcher")
   var mapek: MAPEK = MAPEK.createMAPEK(mapekType, context, query, transitionConfig, publishers, startingPlacementStrategy, allRecords, consumer, fixedSimulationProperties)
   val placementStrategy: PlacementStrategy = PlacementStrategy.getStrategyByName(Await.result(mapek.knowledge ? GetPlacementStrategyName, timeout.duration).asInstanceOf[String])
   var clientNode: ActorRef = _
@@ -169,7 +170,7 @@ class QueryGraph(context: ActorContext, cluster: Cluster, query: Query, transiti
         s"; with hostInfo ${opAndHostInfo._2.operatorMetrics} " +
         s"; parents: $parentOperators; path.name: ${parentOperators.head.path.name}")
       mapek.knowledge ! AddOperator(opAndHostInfo._1)
-      GUIConnector.sendInitialOperator(opAndHostInfo._2.member.address, placementStrategy.name, opAndHostInfo._1.path.name, s"$mode", parentOperators, opAndHostInfo._2, isRootOperator)(selfAddress = cluster.selfAddress)
+      GUIConnector.sendInitialOperator(opAndHostInfo._2.member.address, placementStrategy.name, opAndHostInfo._1.path.name, s"$mode", parentOperators, opAndHostInfo._2, isRootOperator)(cluster.selfAddress, blockingIoDispatcher)
       opAndHostInfo._1
     }}
   }
@@ -180,8 +181,8 @@ class QueryGraph(context: ActorContext, cluster: Cluster, query: Query, transiti
     NodeFactory.createOperator(cluster, context, hostInfo, props)
   }
 
-  def getPlacementStrategy(): String = {
-    Await.result(mapek.knowledge ? GetPlacementStrategyName, timeout.duration).asInstanceOf[String]
+  def getPlacementStrategy(): Future[String] = {
+    (mapek.knowledge ? GetPlacementStrategyName).mapTo[String]
   }
 
   def addDemand(demand: Seq[Requirement]): Unit = {

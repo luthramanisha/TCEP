@@ -35,58 +35,66 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav" style="background:#181948 !important;">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none"></span>
+        <!-- <span class="d-block d-lg-none"></span> -->
         <span class="d-none d-lg-block">
-        <img class="img-fluid mx-auto mb-100" src="resources/tu-darmstadt-logo.png" alt="">
+        <img class="img-fluid mx-auto mb-50" src="resources/tu-darmstadt-logo.png" alt="">
       </span>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <label class="h5 mb-10 text-white" for="query">Query</label>
                 <select class="form-control mb-0" id="query"></select>
+                <p id="queryMessage"></p>
                 <br>
 
                 <label class="h5 mb-10 text-white" for="transitionMode">Transition mode</label>
                 <select class="form-control mb-0" id="transitionMode"></select>
+                <p id="modeMessage"></p>
                 <br>
 
                 <label class="h5 mb-10 text-white" for="algorithms">QoS requirements</label>
                 <select class="form-control mb-0" id="algorithms"></select>
+                <p id="algorithmsMessage"></p>
+                <br>
+
+                <label class="h5 mb-10 text-white" for="mapek">MAPEK</label>
+                <select class="form-control mb-0" id="mapek"></select>
+                <p id="mapekMessage"></p>
                 <br>
 
                 <button class="btn btn-primary circle mb-20" onclick="start()">Start</button>
                 <button class="btn btn-danger circle mb-20" onclick="stop()">Stop</button>
                 <br>
 
-                <button class="btn btn-info circle mb-20" onclick="transition()">Transition</button>
-                <button class="btn btn-info circle mb-20" onclick="environmentalChange()">Scale Out
+                <button class="btn btn-info circle mb-10" onclick="transition()">Transition</button>
+                <!-- <button class="btn btn-info circle mb-20" onclick="environmentalChange()">Scale Out
                 </button>
-                <br>
+                <br> -->
             </li>
         </ul>
     </div>
     <div>
-        <label class="h5 mb-10 text-white" for="auto-reload">Auto refresh GUI (3 sec)</label>
+        <label class="h5 mb-0 text-white" for="auto-reload">Auto refresh (3 sec)</label>
         <input id="auto-reload" type="checkbox" checked onclick="didChangeAutoReload()">
         <br>
 
-        <label class="h5 mb-10 text-white" for="auto-reload">Auto Transitions</label>
+        <!--<label class="h5 mb-10 text-white" for="auto-reload">Auto Transitions</label>
         <input id="auto-transition" type="checkbox" checked onclick="didChangeAutoTransitions()">
-        <br>
+        <br> -->
 
         <label class="h5 mb-10 text-white" for="auto-reload">Hide Link Data</label>
         <input id="hide-link-data" type="checkbox" onclick="didChangeHideLinkData()">
         <div id="viewSwitch">
             <button id="switchBtn" class="btn btn-info mb-10" onclick="showLatencySpace()">Legacy</button>
         </div>
-        <div class="nav-item mt-30 mb-30">
+        <div class="nav-item mt-0 mb-0">
             <div class="social-icons">
-                <a href="https://github.com/luthramanisha/TCEP-Demo" target="_blank">
+                <a href="https://github.com/luthramanisha/TCEP" target="_blank">
                     <i class="fab fa-github"></i>
                 </a>
                 <a href="https://www.youtube.com/watch?v=ICVTkCRASck" target="_blank">

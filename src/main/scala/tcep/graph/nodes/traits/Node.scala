@@ -147,7 +147,7 @@ trait Node extends MFGSMode with SMSMode with ActorLogging {
               val timestamp = System.currentTimeMillis()
               val migrationTime = timestamp - downTime
               val nodeSelectionTime = timestamp - startTime
-              GUIConnector.sendOperatorTransitionUpdate(self, newOperator, algorithm.name, timestamp, migrationTime, nodeSelectionTime, getParentOperators(), optimalHost, isRootOperator)(selfAddress = cluster.selfAddress)
+              GUIConnector.sendOperatorTransitionUpdate(self, newOperator, algorithm.name, timestamp, migrationTime, nodeSelectionTime, getParentOperators(), optimalHost, isRootOperator)(cluster.selfAddress, blockingIoDispatcher)
 
               log.info(s"${self} shutting down Self")
               SystemLoad.operatorRemoved()

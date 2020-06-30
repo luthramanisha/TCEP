@@ -31,9 +31,9 @@ class LightweightMonitor(mapek: LightweightMAPEK/*, var allRecords: AllRecords*/
   }
 
   override def postStop(): Unit = {
-    super.postStop()
     updatePerformanceScheduler.cancel()
-    checkOperatorsScheduler.cancel()
+    //checkOperatorsScheduler.cancel()
+    super.postStop()
   }
 
   override def receive: Receive = {
@@ -44,7 +44,7 @@ class LightweightMonitor(mapek: LightweightMAPEK/*, var allRecords: AllRecords*/
   }
 
   def updatePerformance(): Unit = {
-    log.info(s"Update Performance called.")
+    //log.info(s"Update Performance called.")
     for {
       consumer <- (mapek.knowledge ? GetConsumer).mapTo[ActorRef]
       allRecords <- (consumer ? GetAllRecords).mapTo[AllRecords]
@@ -81,7 +81,7 @@ class LightweightMonitor(mapek: LightweightMAPEK/*, var allRecords: AllRecords*/
       operators <- (mapek.knowledge ? GetOperators).mapTo[List[ActorRef]]
     } yield {
 
-      log.info("checking OperatorHost state")
+      //log.info("checking OperatorHost state")
       // check if an operator of the graph has an unreachable host (and no backup)
       // if yes, notify analyzer to trigger transition and/or placement algorithm execution
       val unreachableNodes: Set[Address] = cluster.state.unreachable.map(m => m.address)

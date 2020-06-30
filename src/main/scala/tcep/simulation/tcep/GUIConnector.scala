@@ -10,8 +10,7 @@ import tcep.placement.HostInfo
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.parsing.json.{JSONArray, JSONObject}
 
 
@@ -45,8 +44,9 @@ object GUIConnector {
   }
 
   private def shrinkOperatorName(str: String): String = {
-    val split = str.split("Node")
-    split(0) + "-" + split(1).substring(0, 6) // "ConjunctionNodedf02..." -> "Conjunction-df02..."
+    // Stream134253e60-0fba-42c6-ae67-8dad1c529ef2
+    val split = str.split("-")
+    split(0)
   }
   /**
     * generate JSON Objects describing the parents of an operator
@@ -78,7 +78,7 @@ object GUIConnector {
     * @param migrationTime - Migration time of the transition
     * @param parents - Parent actor names (without path)
     */
-  def sendOperatorTransitionUpdate(oldOperator: ActorRef, newOperator: ActorRef, algorithmName: String, timestamp: Long, migrationTime: Long, nodeSelectionTime: Long, parents: Seq[ActorRef], newHostInfo: HostInfo, isRootOperator: Boolean)(implicit selfAddress: Address) = Future {
+  def sendOperatorTransitionUpdate(oldOperator: ActorRef, newOperator: ActorRef, algorithmName: String, timestamp: Long, migrationTime: Long, nodeSelectionTime: Long, parents: Seq[ActorRef], newHostInfo: HostInfo, isRootOperator: Boolean)(implicit selfAddress: Address, ec: ExecutionContext) = Future {
     log.info(s"GUI update data $algorithmName $oldOperator $newOperator")
     val oAddress = if(isMininetSimulation) convertAddress(oldOperator.path.address) else oldOperator.path.address
     val tAddress = if(isMininetSimulation) convertAddress(newOperator.path.address) else newOperator.path.address
@@ -120,7 +120,7 @@ object GUIConnector {
     * @param parents - parent operators of the current operator
     * @param nodeInfo - node info of the node that the operator was placed on
     */
-  def sendInitialOperator(transitionAddress: Address, algorithmName: String, operatorName: String, transitionMode: String, parents: Seq[ActorRef], nodeInfo: HostInfo, isRootOperator: Boolean)(implicit selfAddress: Address): Future[Unit] = Future {
+  def sendInitialOperator(transitionAddress: Address, algorithmName: String, operatorName: String, transitionMode: String, parents: Seq[ActorRef], nodeInfo: HostInfo, isRootOperator: Boolean)(implicit selfAddress: Address, ec: ExecutionContext): Future[Unit] = Future {
     try {
     val parentList = convertParentList(parents, System.currentTimeMillis(), nodeInfo)
     val tAddress = if(isMininetSimulation) convertAddress(transitionAddress) else transitionAddress
@@ -147,7 +147,7 @@ object GUIConnector {
       .asString.code
     log.info(s"GUI update result code: $result")
     } catch {
-      case e: Throwable => log.debug(s"error while sending gui operator update $transitionAddress $operatorName $parents $nodeInfo", e)
+      case e: Throwable => log.error(s"error while sending gui operator update to $guiEndpoint/setOperator \n $transitionAddress $operatorName $parents $nodeInfo", e)
     }
   }
 
@@ -155,9 +155,8 @@ object GUIConnector {
     * Send the nodes that are in the cluster to the GUI server
     * @param cluster - cluster that contains the nodes to be send
     */
-  def sendMembers(cluster: Cluster): Future[Unit] = Future {
+  def sendMembers(cluster: Cluster)(implicit ec: ExecutionContext): Future[Unit] = Future {
     implicit val selfAddress: Address = cluster.selfAddress
-    log.info("Sending cluster member update to GUI")
     val members = cluster.state.members.filter(x => x.status == MemberStatus.Up)
     val hostList = mutable.MutableList[JSONObject]()
     for (member <- members) {
@@ -185,7 +184,7 @@ object GUIConnector {
     * @param bdp - the accumulated bandwidth delay product of the operator graph
     * @param latencyDistances - List of distances and vivaldi coordinates
     */
-  def sendBDPUpdate(bdp: Double, latencyDistances: List[LatencyDistance])(implicit selfAddress: Address): Future[Unit] = Future {
+  def sendBDPUpdate(bdp: Double, latencyDistances: List[LatencyDistance])(implicit selfAddress: Address, ec: ExecutionContext): Future[Unit] = Future {
     log.info(s"GUI update consumer data BDP: $bdp")
 
     var coordinatesList = mutable.Map[String, JSONObject]()
@@ -232,7 +231,7 @@ object GUIConnector {
     * Sends the overall transition time to the GUI server
     * @param transitionTime - the accumulated transition time of the operator graph
     */
-  def sendTransitionTimeUpdate(transitionTime: Double): Future[Unit] = Future {
+  def sendTransitionTimeUpdate(transitionTime: Double)(implicit ec: ExecutionContext): Future[Unit] = Future {
     log.info(s"GUI update data transition time $transitionTime")
 
     val data = Map(

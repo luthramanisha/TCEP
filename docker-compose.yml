@@ -15,7 +15,7 @@ services:
     privileged: true
 
   gui:
-    image: mluthra/tcep-gui
+    image: localhost:5000/tcep-gui
     ports:
        - 3000:3000
     networks:
@@ -27,15 +27,13 @@ services:
     privileged: true
 
   simulator:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.simulation.tcep.SimulationRunner
-      - ARGS=--dir ./logs --mode 7 --ip simulator --port 2500 --query AccidentDetection  --eventRate 1 --mapek requirementBased --req hops --transitionStrategy SMS --transitionExecutionMode 1 --duration 100
+      - ARGS=--dir ./logs --mode 7 --ip simulator --port 2500 --query Conjunction  --eventRate 100 --mapek requirementBased --req hops --transitionStrategy SMS --transitionExecutionMode 1 --duration 100 --loadTestMax 3
       - LOG_FILE_PATH=/app/logs
     volumes:
        - $HOME/logs:/app/logs
-    ports:
-       - 25001:25001
     networks:
        - main
     deploy:
@@ -45,10 +43,10 @@ services:
     privileged: true
 
   consumer:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.machinenodes.ConsumerApp
-      - ARGS=--dir ./logs --ip consumer --port 2700 --kind Accident --eventRate 1000
+      - ARGS=--dir ./logs --ip consumer --port 2700 --kind Accident --eventRate 100 --loadTestMax 3
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -61,10 +59,10 @@ services:
     privileged: true
 
   speedPublisher1:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip speedPublisher1 --port 2501 --kind SpeedPublisher --numberOfPublishers 1 --eventRate 1000
+      - ARGS=--ip speedPublisher1 --port 2501 --kind SpeedPublisher --numberOfPublishers 1 --eventRate 100
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -77,10 +75,10 @@ services:
     privileged: true
 
   speedPublisher2:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip speedPublisher2 --port 2502 --kind SpeedPublisher --numberOfPublishers 2 --eventRate 1000
+      - ARGS=--ip speedPublisher2 --port 2502 --kind SpeedPublisher --numberOfPublishers 2 --eventRate 100
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -93,10 +91,10 @@ services:
     privileged: true
 
   speedPublisher3:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip speedPublisher3 --port 2503 --kind SpeedPublisher --numberOfPublishers 3 --eventRate 1000
+      - ARGS=--ip speedPublisher3 --port 2503 --kind SpeedPublisher --numberOfPublishers 3 --eventRate 100
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -109,10 +107,10 @@ services:
     privileged: true
 
   densityPublisher:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip densityPublisher --port 2504 --kind DensityPublisher --numberOfPublishers 0 --eventRate 1000
+      - ARGS=--ip densityPublisher --port 2504 --kind DensityPublisher --numberOfPublishers 0 --eventRate 100
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -125,7 +123,7 @@ services:
     privileged: true
 
   worker:
-    image: mluthra/tcep
+    image: localhost:5000/tcep
     environment:
       - MAIN=tcep.machinenodes.EmptyApp
       - ARGS=--port 3400 --eventRate 1000

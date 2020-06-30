@@ -5,7 +5,17 @@
 
 work_dir="$(cd "$(dirname "$0")" ; pwd -P)/../"
 source "$work_dir/docker-swarm.cfg"
-
+source "$work_dir/scripts/common_functions.sh"
+if [ -z $2 ]; then
+  u=$USER
+else
+  u=$2
+fi
+if [ -z $3 ]; then
+  host=$manager
+else
+  host=$3
+fi
 token="undefined"
 maki_pat='^[10]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
 geni_pat='^[72,130]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
@@ -25,9 +35,9 @@ setUser() {
 }
 
 all() {
-    adjust_config
+    adjust_cfg
     ./build.sh
-    setup
+    #setup
     START=$(date +%s.%N)
     take_down_swarm && \
     swarm_token=$(init_manager) && \
@@ -41,21 +51,10 @@ all() {
     echo "publish time diff is $PUB_DIFF"
 }
 
-adjust_config() {
+adjust_cfg() {
     local sections=$n_speed_streams
     local nNodesTotal=$((${#workers[@]}+1))
-    echo "replacing gui server in config with $manager"
-    echo "configuring application.conf for $nPublishers speed publishers and $nNodesTotal nodes total"
-    sed -i -r "s#mininet-simulation = .*#mininet-simulation = false#" ${work_dir}/src/main/resources/application.conf
-    sed -i -r "s#min-nr-of-members = [0-9]*#min-nr-of-members = $nNodesTotal#" ${work_dir}/src/main/resources/application.conf
-    sed -i -r "s#number-of-speed-publisher-nodes = [0-9]*#number-of-speed-publisher-nodes = $n_speed_streams#" ${work_dir}/src/main/resources/application.conf
-    sed -i -r "s#number-of-road-sections = [0-9]*#number-of-road-sections = $sections#" ${work_dir}/src/main/resources/application.conf
-    sed -i -r "s#gui-endpoint = \"(.*?)\"#gui-endpoint = \"http://${manager}:3000\"#" ${work_dir}/src/main/resources/application.conf
-    sed -i -r 's| #\"akka\.tcp://tcep@simulator:\"\$\{\?constants\.base-port\}\"\"| \"akka.tcp://tcep@simulator:\"${?constants.base-port}\"\"|' ${work_dir}/src/main/resources/application.conf
-    sed -i -r 's| \"akka\.tcp://tcep@10\.0\.0\.253:\"\$\{\?constants\.base-port\}\"\"| #\"akka.tcp://tcep@10.0.0.253:\"${?constants.base-port}\"\"|' ${work_dir}/src/main/resources/application.conf
-    sed -i -r 's| \"akka\.tcp://tcep@20\.0\.0\.15:\"\$\{\?constants\.base-port\}\"\"| #\"akka.tcp://tcep@20.0.0.15:\"${?constants.base-port}\"\"|' ${work_dir}/src/main/resources/application.conf
-    sed -i -r "s#const SERVER = \"(.*?)\"#const SERVER = \"${manager}\"#" ${work_dir}/gui/constants.js
-    sed -i -r "s#const SERVER = \"(.*?)\"#const SERVER = \"${manager}\"#" ${work_dir}/gui/src/graph.js
+    adjust_config $sections $sections $nNodesTotal $host "false" "false"
 }
 
 take_down_swarm() {
@@ -112,6 +111,11 @@ setup_instance() {
 
         # Add your user to the docker group.
         sudo usermod -aG docker $USER
+
+	#Install docker-compose version 1.17
+	sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+	sudo chmod +x /usr/local/bin/docker-compose
+
     else
         echo "Docker already installed on $1"
         sudo usermod -a -G docker $USER
@@ -258,5 +262,5 @@ elif [ $1 == "init_manager" ]; then init_manager
 elif [ $1 == "reboot" ]; then rebootSwarm
 elif [ $1 == "build_remote" ]; then build_remote
 elif [ $1 == "get_output" ]; then get_output
-else echo "$help"
+else $1
 fi

@@ -17,7 +17,7 @@ services:
     privileged: true
 
   gui:
-    image: nieda2018/tcep-gui
+    image: mluthra/tcep-gui
     ports:
        - 3000:3000
     networks:
@@ -31,15 +31,13 @@ services:
     privileged: true
 
   simulator:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.simulation.tcep.SimulationRunner
-      - ARGS=--dir ./logs --mode 12 --ip simulator --port 2500 --query AccidentDetection  --eventRate 1 --mapek lightweight --req latency --transitionStrategy MFGS --transitionExecutionMode 1
+      - ARGS=--dir ./logs --mode 7 --ip simulator --port 2500 --query Conjunction  --eventRate 1 --mapek requirementBased --req hops --transitionStrategy SMS --transitionExecutionMode 1 --duration 100 --loadTestMax 50
       - LOG_FILE_PATH=/app/logs
     volumes:
        - $HOME/logs:/app/logs
-    ports:
-       - 25001:25001
     networks:
        - main
     deploy:
@@ -51,10 +49,10 @@ services:
     privileged: true
 
   consumer:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.machinenodes.ConsumerApp
-      - ARGS=--dir ./logs --ip consumer --port 2700 --kind Accident
+      - ARGS=--dir ./logs --ip consumer --port 2700 --kind Accident --eventRate 10 --loadTestMax 50
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -69,10 +67,10 @@ services:
     privileged: true
 
   speedPublisher1:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip speedPublisher1 --port 2501 --kind SpeedPublisher --numberOfPublishers 1
+      - ARGS=--ip speedPublisher1 --port 2501 --kind SpeedPublisher --numberOfPublishers 1 --eventRate 10
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -91,10 +89,10 @@ services:
     privileged: true
 
   speedPublisher2:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip speedPublisher2 --port 2502 --kind SpeedPublisher --numberOfPublishers 2
+      - ARGS=--ip speedPublisher2 --port 2502 --kind SpeedPublisher --numberOfPublishers 2 --eventRate 10
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -113,10 +111,10 @@ services:
     privileged: true
 
   speedPublisher3:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip speedPublisher3 --port 2503 --kind SpeedPublisher --numberOfPublishers 3
+      - ARGS=--ip speedPublisher3 --port 2503 --kind SpeedPublisher --numberOfPublishers 3 --eventRate 10
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -135,10 +133,10 @@ services:
     privileged: true
 
   densityPublisher:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.machinenodes.PublisherApp
-      - ARGS=--ip densityPublisher --port 2504 --kind DensityPublisher --numberOfPublishers 0
+      - ARGS=--ip densityPublisher --port 2504 --kind DensityPublisher --numberOfPublishers 0 --eventRate 10
       - LOG_FILE_PATH=/app/logs
     volumes:
       - $HOME/logs:/app/logs
@@ -157,10 +155,10 @@ services:
     privileged: true
 
   worker:
-    image: nieda2018/tcep
+    image: mluthra/tcep
     environment:
       - MAIN=tcep.machinenodes.EmptyApp
-      - ARGS=--port 3400
+      - ARGS=--port 3400 --eventRate 10
       - LOG_FILE_PATH=/app/logs
     depends_on:
       - simulator

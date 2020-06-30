@@ -149,11 +149,16 @@ class FitnessContainer {
   }
 
   def getPlacementToInit(): String = {
-    val req = scores.head._1
+    val req = scores.headOption
     var out = "None"
     for (op <- Random.shuffle(possibleAlgorithms)) {
-      if (scores.get(req).get(op).get("total").get == 0.0)
+      if (req.isDefined) {
+        if(scores.get(req.get._1).get(op).get("total").get == 0.0)
+          out = op
+      } else {
+        log.info(s"no requirements defined, selecting algorithm randomly among $possibleAlgorithms")
         out = op
+      }
     }
     out
   }

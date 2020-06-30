@@ -18,6 +18,7 @@ abstract class Consumer extends VivaldiCoordinates with ActorLogging {
   var eventStreams: Seq[Vector[Stream1[Any]]] = _
 
   override def postStop(): Unit = {
+    log.info(s"stopping self $self")
     super.postStop()
   }
 
@@ -28,7 +29,7 @@ abstract class Consumer extends VivaldiCoordinates with ActorLogging {
       log.info(s"Query is: ${this.query.toString}")
 
     case GetAllRecords =>
-      log.info(s"${sender()} asked for AllRecords")
+      log.debug(s"${sender()} asked for AllRecords")
       sender() ! this.allRecords
 
     case GetMonitorFactories =>
@@ -38,7 +39,7 @@ abstract class Consumer extends VivaldiCoordinates with ActorLogging {
       sender() ! Set.empty
 
     case event: Event =>
-      log.info(s"EVENT: $event")
+      log.debug(s"$self received EVENT: $event")
       this.monitors.foreach(monitor => monitor.onEventEmit(event, this.transitionStatus))
 
     case SetStatus(status) =>
@@ -46,23 +47,24 @@ abstract class Consumer extends VivaldiCoordinates with ActorLogging {
       this.transitionStatus = status
 
     case SetQosMonitors =>
-      log.info("Setting QoS Monitors")
-      val latencyMonitorFactory = PathLatencyMonitorFactory(query, Some(allRecords.recordLatency))
-      val hopsMonitorFactory = MessageHopsMonitorFactory(query, Some(allRecords.recordMessageHops), allRecords.recordProcessingNodes)
-      val loadMonitorFactory = LoadMonitorFactory(query, Some(allRecords.recordAverageLoad))
-      val frequencyMonitorFactory = AverageFrequencyMonitorFactory(query, Some(allRecords.recordFrequency))
-      val recordTransitionStatusFactory = TransitionMonitorFactory(query, allRecords.recordTransitionStatus)
-      val messageOverheadMonitorFactory = MessageOverheadMonitorFactory(query, allRecords.recordMessageOverhead)
-      val networkUsageMonitorFactory = NetworkUsageMonitorFactory(query, allRecords.recordNetworkUsage)
-      val publishingRateMonitorFactory = PublishingRateMonitorFactory(query, allRecords.recordPublishingRate)
+      if(monitorFactories.isEmpty) {
+        log.info(s"${self} Setting QoS Monitors")
+        val latencyMonitorFactory = PathLatencyMonitorFactory(query, Some(allRecords.recordLatency))
+        val hopsMonitorFactory = MessageHopsMonitorFactory(query, Some(allRecords.recordMessageHops), allRecords.recordProcessingNodes)
+        val loadMonitorFactory = LoadMonitorFactory(query, Some(allRecords.recordAverageLoad))
+        val frequencyMonitorFactory = AverageFrequencyMonitorFactory(query, Some(allRecords.recordFrequency))
+        val recordTransitionStatusFactory = TransitionMonitorFactory(query, allRecords.recordTransitionStatus)
+        val messageOverheadMonitorFactory = MessageOverheadMonitorFactory(query, allRecords.recordMessageOverhead)
+        val networkUsageMonitorFactory = NetworkUsageMonitorFactory(query, allRecords.recordNetworkUsage)
+        val publishingRateMonitorFactory = PublishingRateMonitorFactory(query, allRecords.recordPublishingRate)
 
-      monitorFactories = Array(latencyMonitorFactory, hopsMonitorFactory,
-        loadMonitorFactory, frequencyMonitorFactory, messageOverheadMonitorFactory, networkUsageMonitorFactory,
-        recordTransitionStatusFactory, publishingRateMonitorFactory)
-      this.monitors = monitorFactories.map(f => f.createNodeMonitor)
-      //log.info(s"Monitors set: ${this.monitors.toString}")
-      log.info(s"Setting QoS Monitors set. AllRecords are: ${this.allRecords.getValues}")
-
+        monitorFactories = Array(latencyMonitorFactory, hopsMonitorFactory,
+          loadMonitorFactory, frequencyMonitorFactory, messageOverheadMonitorFactory, networkUsageMonitorFactory,
+          recordTransitionStatusFactory, publishingRateMonitorFactory)
+        this.monitors = monitorFactories.map(f => f.createNodeMonitor)
+        //log.info(s"Monitors set: ${this.monitors.toString}")
+        log.info(s"Setting QoS Monitors set. AllRecords are: ${this.allRecords.getValues}")
+      }
     case SetStreams(streams) =>
       this.eventStreams = streams.asInstanceOf[Seq[Vector[Stream1[Any]]]]
       log.info("Event streams received")

@@ -6,20 +6,20 @@
 
 work_dir="$(cd "$(dirname "$0")" ; pwd -P)/.."
 source "${work_dir}/docker-swarm.cfg"
-if [ -z $1 ]; then
-  remote_build='false'
-else
-  remote_build=$1
-fi
+remote_build='false'
 sbt_remote='false'
 
 build_local() {
   cd $work_dir
   sbt assembly || exit 1
 
-  echo "dockerhub login"
-  docker login
-
+  if [[ $registry_user == "localhost:5000" ]]; then
+    echo "creating local docker registry service"
+    [[ $(docker service ls -q -f name=registry) ]] || docker service create --name registry --publish 5000:5000 registry:2
+  else
+    echo "dockerhub login"
+    docker login
+  fi
   mkdir $work_dir/dockerbuild
   printf "\nBuilding image\n"
   cp $work_dir/target/scala-2.12/tcep_2.12-0.0.1-SNAPSHOT-one-jar.jar $work_dir/dockerbuild
@@ -95,7 +95,7 @@ ENDSSH
 
 
 if [[ $remote_build == 'false' ]]; then
-    build_local
+    build_local $1
 else
-    build_remote
+    build_remote $1
 fi

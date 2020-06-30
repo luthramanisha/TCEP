@@ -159,7 +159,7 @@ class RequirementBasedMAPEK(context: ActorContext, val query: Query, mode: Trans
       log.info(s"starting MAPEK Knowledge $self")
     }
 
-    override def receive: Receive = super.receive orElse  {
+    override def receive: Receive = super.receive orElse {
 
       case SetPlacementAlgorithm(placementAlgorithm: PlacementAlgorithm) =>
         this.currentPlacementAlgorithm = placementAlgorithm

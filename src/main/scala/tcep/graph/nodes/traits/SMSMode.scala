@@ -134,7 +134,7 @@ trait SMSMode extends TransitionMode {
               val timestamp = System.currentTimeMillis()
               val migrationTime = 0
               val nodeSelectionTime = timestamp - startTime
-              GUIConnector.sendOperatorTransitionUpdate(self, successor, algorithm.name, timestamp, migrationTime, nodeSelectionTime, parents, newHostInfo, isRootOperator)(cluster.selfAddress)
+              GUIConnector.sendOperatorTransitionUpdate(self, successor, algorithm.name, timestamp, migrationTime, nodeSelectionTime, parents, newHostInfo, isRootOperator)(cluster.selfAddress, blockingIoDispatcher)
               notifyMAPEK(cluster, successor) // notify mapek knowledge about operator change
               val placementOverhead = newHostInfo.operatorMetrics.accPlacementMsgOverhead
               // remote operator creation, state transfer and execution start, subscription management

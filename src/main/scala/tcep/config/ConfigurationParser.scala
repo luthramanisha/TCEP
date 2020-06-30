@@ -53,6 +53,8 @@ trait ConfigurationParser {
         readArgs(map ++ Map('transitionStrategy -> value), tail)
       case "--transitionExecutionMode" :: value :: tail =>
         readArgs(map ++ Map('transitionExecutionMode -> value), tail)
+      case "--loadTestMax" :: value :: tail =>
+        readArgs(map ++ Map('loadTestMax -> value), tail)
       case option :: tail =>
         logger.error(s"Unknown option $option $tail");
         readArgs(map, tail)

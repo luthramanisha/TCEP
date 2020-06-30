@@ -16,7 +16,7 @@ class LightweightPlanner(mapek: LightweightMAPEK) extends PlannerComponent(mapek
     log.info("Staring Lightweight Planner")
   }
 
-  override def receive: Receive = {
+  override def receive: Receive = super.receive orElse {
     case Plan =>
       log.info("Plan message received")
       for {

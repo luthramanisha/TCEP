@@ -33,6 +33,7 @@ abstract class PlannerComponent(mapek: MAPEK) extends MAPEKComponent {
   override def receive: Receive = {
 
     case ManualTransition(algorithmName) =>
+      log.info(s"sending manualTransition request for $algorithmName to executor ")
       mapek.executor ! ExecuteTransition(algorithmName)
   }
 }
@@ -47,6 +48,7 @@ abstract class ExecutorComponent(mapek: MAPEK) extends MAPEKComponent {
   override def receive: Receive = {
 
     case ExecuteTransition(strategyName) =>
+      log.info(s"received ExecuteTransition to $strategyName")
       for {
         currentStrategyName <- (mapek.knowledge ? GetPlacementStrategyName).mapTo[String]
         client<- (mapek.knowledge ? GetClient).mapTo[ActorRef]
@@ -80,7 +82,9 @@ abstract case class KnowledgeComponent(query: Query, var transitionConfig: Trans
     case IsDeploymentComplete => sender() ! this.deploymentComplete
     case SetDeploymentStatus(isComplete) => this.deploymentComplete = isComplete
     case GetPlacementStrategyName => sender() ! currentPlacementStrategy.name
-    case SetPlacementStrategy(newStrategy) => this.currentPlacementStrategy = newStrategy
+    case SetPlacementStrategy(newStrategy) =>
+      this.currentPlacementStrategy = newStrategy
+      log.info(s"updated current placementStrategy to $currentPlacementStrategy")
     case GetRequirements => sender() ! this.requirements.toList
     case ar: AddRequirement =>
       ar.requirements.foreach(req => this.requirements += req)

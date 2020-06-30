@@ -1,5 +1,7 @@
-const SERVER = "10.2.1.85"
+// this is localhost since requests are handled by route.js
+const SERVER = "35.246.223.49"
 const GUI_PORT = 3000
+const INTERACTIVE_SIMULATION_ENABLED = true
 
 // Holds the current data received from the GUI server
 // Used to determine if the data changed so a redraw is not unnecessarily done
@@ -34,7 +36,7 @@ function setNodePositions(nodes, consumerData) {
              else if (n.name.toLowerCase().indexOf('publisher') !== -1) {
                     console.log ("published found!")
                     n.x = 100
-                    n.y = y + (200* (numPublishers++)) // Every publisher with 50 offset
+                    n.y = y + (125* (numPublishers++)) // Every publisher with 50 offset
                     n.fixed = true
 
             } else {
@@ -208,7 +210,8 @@ var svg = d3.select("#chartArea").append("svg")
     .attr('y', 0)
 
 var img = "";
-var patt = /10.2.1/i;
+var patt = /10/i;
+var gCpatt = /35/i
 var ximg = 0; yimg = 0; widthimg = 0; heightimg = 0;
 if(patt.test(SERVER)) {
     img = "resources/MAKI_Supporter.png";
@@ -217,6 +220,14 @@ if(patt.test(SERVER)) {
     widthimg = 100;
     heightimg = 80;
 }
+else if(gCpatt.test(SERVER)) {
+    img = "resources/GC.png";
+    ximg = legendX - 30;
+    yimg = legendY - 10 ;
+    widthimg = 100;
+    heightimg = 80;
+}
+
 else {
     img = "resources/GENI.png";
     ximg = legendX - 30;
