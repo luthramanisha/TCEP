@@ -1,5 +1,5 @@
 // this is localhost since requests are handled by route.js
-const SERVER = "35.246.223.49"
+const SERVER = "127.0.1.1"
 const GUI_PORT = 3000
 const INTERACTIVE_SIMULATION_ENABLED = true
 
