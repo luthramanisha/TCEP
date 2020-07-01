@@ -15,7 +15,6 @@ var fontSize = 18;
 var fontColor = "#000";
 var greenColor = '#00cc00';
 
-
 function setNodePositions(nodes, consumerData) {
     const y = 250
     const xOff2 = 300
@@ -473,7 +472,7 @@ function getLatencyForLink(consumerData, source, destination) {
     consumerData.latencyValues.forEach(val => {
         if (val.source == source.name && val.destination == destination.name) {
             value = val.distance.toFixed(2);
-            //console.log(val.source, source.name, val.destination, destination.name, value)
+            console.log(val.source, source.name, val.destination, destination.name, value)
         }
     });
     return value;
