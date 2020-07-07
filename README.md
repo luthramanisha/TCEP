@@ -132,7 +132,7 @@ This project is based on <a href="https://pweisenburger.github.io/AdaptiveCEP/" 
 + M. Luthra, B. Koldehofe, R. Arif, P. Weisenburger, G. Salvaneschi, TCEP: Adapting to Dynamic User Environments by Enabling Transitions between Operator Placement Mechanisms. In Proceedings of the 12th ACM International Conference on Distributed and Event-based Systems (DEBS ’18), pp. 136–147. <a href="https://doi.org/10.1145/3210284.3210292" target="_blank">10.1145/3210284.3210292</a>
 + P. Weisenburger, M. Luthra, B. Koldehofe and G. Salvaneschi, Quality-Aware Runtime Adaptation in Complex Event Processing. In IEEE/ACM 12th International Symposium on Software Engineering for Adaptive and Self-Managing Systems (SEAMS '17), pp. 140-151. <a href="https://doi.org/10.1109/SEAMS.2017.10" target="_blank">10.1109/SEAMS.2017.10</a>
 + M. Luthra, B. Koldehofe, R. Steinmetz, Transitions for Increased Flexibility in Fog Computing: A Case Study on Complex Event Processing. Informatik Spektrum 42, pp. 244–255 (2019). <a href="https://doi.org/10.1007/s00287-019-01191-0" target="_blank">10.1007/s00287-019-01191-0</a>
-+ M. Luthra and B. Koldehofe, ProgCEP: A Programming Model for Complex Event Processing over Fog Infrastructure. In Proceedings of the 2nd International Workshop on Distributed Fog Services Design (DFSD ’19). <a href="https://doi.org/10.1145/3366613.3368121" target="_blank">10.1145/3366613.3368121></a>
++ M. Luthra and B. Koldehofe, ProgCEP: A Programming Model for Complex Event Processing over Fog Infrastructure. In Proceedings of the 2nd International Workshop on Distributed Fog Services Design @ Middleware Conference (DFSD ’19). <a href="https://doi.org/10.1145/3366613.3368121" target="_blank">10.1145/3366613.3368121></a>
 
 
 ## [Acknowledgement](#acknowledgement)
