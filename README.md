@@ -22,7 +22,7 @@ To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our <a hr
 [Contact](#contact)
 
 ## [Video of the demo](#video-of-the-demo)
-[![TCEP-Demo](https://i9.ytimg.com/vi/K3PGyffiKIw/mqdefault.jpg?time=1594205102755&sqp=CKzHlvgF&rs=AOn4CLChnnXpc1cU30igtyMVvJ9XEr7SnQ)](https://youtu.be/K3PGyffiKIw)
+[![TCEP-Demo](https://i9.ytimg.com/vi/SXes2mfl-_Y/mqdefault.jpg?time=1594208789897&sqp=CLzjlvgF&rs=AOn4CLCTV5BYjjRKwdWHBSoTyys2ADZLKA)](https://youtu.be/SXes2mfl-_Y)
 
 ## [Getting Started](#getting-started)
 
