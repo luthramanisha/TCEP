@@ -11,6 +11,8 @@ TCEP contributes the following:
 
 To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our <a href="http://35.246.223.49:3000/" target="_blank">live demo</a> at Google cloud! 
 
+[Video of the demo](#video-of-the-demo)
+
 [Getting Started](#getting-started)
 
 [Publications](#publications)
@@ -18,6 +20,9 @@ To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our <a hr
 [Acknowledgement](#acknowledgement)
 
 [Contact](#contact)
+
+## [Video of the demo](#video-of-the-demo)
+[![TCEP-Demo](https://i9.ytimg.com/vi/K3PGyffiKIw/mqdefault.jpg?time=1594205102755&sqp=CKzHlvgF&rs=AOn4CLChnnXpc1cU30igtyMVvJ9XEr7SnQ)](https://youtu.be/K3PGyffiKIw)
 
 ## [Getting Started](#getting-started)
 
