@@ -4,12 +4,20 @@ TCEP is a research project that provides a programming model for development of 
  
 TCEP contributes the following:
 
-+ **Programming model** to implement _operator placement_ algorithms
++ **Programming model** to implement _operator placement_ algorithms including algorithms from the state-of-the-art (see list below)
 + **Transition execution strategies** for a _cost-efficient_ and _seamless_ operator placement transition
 + **Lightweight learning strategy** for selection of operator placement for the given QoS demands
 + **Heterogeneous infrastructure support** for execution of operator graphs
 
 To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check our <a href="http://35.246.223.49:3000/" target="_blank">live demo</a> at Google cloud! 
+
+## List of Operator Placement Algorithms 
++ Our version of Relaxation algorithm  <a href="https://dl.acm.org/doi/10.1109/ICDE.2006.105" target="_blank">(from Pietzuch et al.)</a>
++ Our version of MDCEP algorithm  <a href="https://ieeexplore.ieee.org/document/7347944/" target="_blank">(from Starks et. al.)</a>
++ Our version of MOPA algorithm <a href="https://ieeexplore.ieee.org/document/5560127" target="_blank">(from Rizou et al.)</a>
++ Our version of Global Optimal algorithm
++ Producer Consumer operator placement
++ Random operator placement
 
 [Video of the demo](#video-of-the-demo)
 
