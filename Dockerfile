@@ -1,4 +1,4 @@
-FROM 1science/java:oracle-jre-8
+FROM ibmjava:8-sfj-alpine
 
 WORKDIR /app
 
