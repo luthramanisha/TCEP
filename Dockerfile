@@ -5,7 +5,8 @@ WORKDIR /app
 RUN apk update && \
     apk upgrade && \
     apk add iproute2 && \
-    apk add openntpd
+    apk add openntpd && \
+    apk add bash
 
 RUN ln -s /usr/lib/tc /lib/tc
 RUN sed -i '1 i\server nserver' /etc/ntpd.conf
