@@ -9,7 +9,7 @@ TCEP contributes the following:
 + **Lightweight learning strategy** for selection of operator placement for the given QoS demands
 + **Heterogeneous infrastructure support** for execution of operator graphs
 
-To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check out our <a href="http://129.110.253.26:3000/" target="_blank">live demo</a> at GENI! 
+To run TCEP simply do `./scripts/build.sh && docker-compose up`. Check out our <a href="http://217.160.60.42/" target="_blank">live demo</a> at GENI! 
 
 ## List of Operator Placement Algorithms 
 + Our version of Relaxation algorithm  <a href="https://dl.acm.org/doi/10.1109/ICDE.2006.105" target="_blank">(from Pietzuch et al.)</a>
