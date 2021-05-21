@@ -10,6 +10,10 @@ import tcep.utils.SpecialStats
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
+/*
+* Each placement mechanism trait extends the PlacementStrategy interface that provides standard extensions
+* This algorithm determines an optimal node for placement for the BDP product metric 
+*/
 object GlobalOptimalBDPAlgorithm extends PlacementStrategy {
 
   override val name: String = "GlobalOptimalBDP"
