@@ -9,6 +9,10 @@ import tcep.utils.TCEPUtils
 
 import scala.concurrent.Future
 
+/*
+* Each placement mechanism trait extends the PlacementStrategy interface that provides standard extensions
+* This algorithm implements a simple placement of operators on the given producers and consumers.
+*/
 object MobilityTolerantAlgorithm extends PlacementStrategy {
 
   override val name = "ProducerConsumer"
