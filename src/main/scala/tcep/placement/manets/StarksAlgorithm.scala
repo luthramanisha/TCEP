@@ -17,9 +17,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.{Failure, Random, Success}
 
-/**
-  * Created by mac on 10/10/2017.
-  */
+/*
+* Each placement mechanism trait extends the PlacementStrategy interface that provides standard extensions
+* This algorithm implements an algorithm for MANETs described here: https://ieeexplore.ieee.org/document/7347944
+*/
 object StarksAlgorithm extends PlacementStrategy {
 
   override val name = "MDCEP"
