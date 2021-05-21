@@ -8,6 +8,10 @@ import tcep.graph.nodes.traits.Node.Dependencies
 
 import scala.concurrent.Future
 
+/*
+* Each placement mechanism trait extends the PlacementStrategy interface that provides standard extensions
+* This algorithm implements a simple random operator placement
+*/
 object RandomAlgorithm extends PlacementStrategy {
 
   override val name = "Random"
