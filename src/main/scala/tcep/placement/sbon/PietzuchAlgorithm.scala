@@ -14,11 +14,11 @@ import tcep.utils.TCEPUtils.makeMapFuture
 
 import scala.concurrent.Future
 
-
-/**
-  * Created by Raheel on 04/08/2017.
-  * updated by Niels 15/06/2018
-  */
+/*
+* Each placement mechanism trait extends the PlacementStrategy interface that provides standard extensions
+* This trait describes the Relaxation algorithm described in the work of Pietzuch et al. 
+* https://ieeexplore.ieee.org/document/1617417
+*/
 object PietzuchAlgorithm extends PlacementStrategy {
 
   val stepAdjustmentEnabled: Boolean = ConfigFactory.load().getBoolean("constants.placement.relaxation-step-adjustment-enabled")
@@ -47,7 +47,7 @@ object PietzuchAlgorithm extends PlacementStrategy {
 
   /**
     * Applies Pietzuch's algorithm to find the optimal node for a single operator
-    * https://www.researchgate.net/publication/220965454_Network-Aware_Operator_Placement_for_Stream-Processing_Systems
+    * https://ieeexplore.ieee.org/document/1617417
     *
     * @param dependencies   parent nodes on which query is dependent (parent and children operators; caller is responsible for completeness!)
     * @return the address of member where operator will be deployed
